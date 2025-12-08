@@ -263,110 +263,338 @@ header img.logo {
       .cart{position:relative;top:0}
     }
 
+/* ==========================================
+   MOBILE CORRIGIDO — LAYOUT FIEL AO DESKTOP
+   ========================================== */
+@media (max-width: 650px) {
 
-
-/* ===== CORREÇÃO MOBILE REAL ===== */
-@media (max-width: 900px) {
-
-  body {
-    padding: 10px !important;
-  }
-
-  /* Logo */
-  header {
-    margin-bottom: 12px !important;
-    padding: 0 !important;
-    box-shadow: none !important;
-  }
-
-  header img.logo {
-    width: 90% !important;
-    max-width: 260px !important;
-    padding: 0 !important;
-  }
-
-  /* Grid vira 1 coluna */
-  .page {
-    grid-template-columns: 1fr !important;
-    gap: 0 !important;
-  }
-
-  /* Cardápio ocupa toda a largura */
-  .menu {
-    padding: 10px !important;
-    margin: 0 !important;
-  }
-
-  /* CARDS – corrigir alinhamento e tamanho */
+  /* Card permanece horizontal (como desktop) */
   .card {
+    display: flex !important;
     flex-direction: row !important;
     align-items: flex-start !important;
-    padding: 10px !important;
-    gap: 10px !important;
+    gap: 12px !important;
+    padding: 14px !important;
+    width: 100% !important;
   }
 
+  /* Imagem */
   .card .thumb {
-    width: 85px !important;
-    height: 85px !important;
+    width: 80px !important;
+    height: 80px !important;
     flex-shrink: 0 !important;
+    border-radius: 10px !important;
+    object-fit: cover !important;
+  }
+
+  /* Bloco de texto */
+  .card .info {
+    flex: 1 !important;
+    display: flex !important;
+    flex-direction: column !important;
+    justify-content: flex-start !important;
   }
 
   .card .info h3 {
-    font-size: 14px !important;
+    font-size: 16px !important;
     line-height: 1.2 !important;
+    margin-bottom: 6px !important;
+    color: #4a2e2e !important;
+    font-weight: 700 !important;
   }
 
   .card .info p {
-    font-size: 12px !important;
+    font-size: 13px !important;
+    line-height: 1.35 !important;
+    margin-bottom: 8px !important;
+    color: #6a4a4a !important;
   }
 
-  /* Ações ficam alinhadas e sem quebrar */
+  /* Ações do card (preço + quantidade + botão) */
   .card .actions {
-    width: 100%;
+    display: flex !important;
+    flex-direction: column !important;
     align-items: flex-end !important;
-    gap: 6px !important;
+    justify-content: center !important;
+    gap: 8px !important;
+    min-width: 110px !important;
   }
 
-  .price {
+  /* Preço no topo direito */
+  .card .actions .price {
     font-size: 15px !important;
+    font-weight: 800 !important;
+    color: #4a2e2e !important;
+    margin-bottom: 4px !important;
+    white-space: nowrap !important;
+  }
+
+  /* Qtd + botão */
+  .card .actions > div {
+    display: flex !important;
+    flex-direction: row !important;
+    align-items: center !important;
+    gap: 10px !important;
   }
 
   .qty button {
     padding: 6px 10px !important;
   }
 
-  /* Ajusta botões */
   .add-btn {
-    padding: 7px 10px !important;
-    font-size: 12px !important;
+    padding: 8px 14px !important;
+    font-size: 13px !important;
+    border-radius: 12px !important;
+    white-space: nowrap !important;
   }
 
-  /* BEBIDAS – impedindo que fiquem minúsculas */
-  .products[style] .card {
+  /* Impede o texto de esmagar */
+  .card * {
+    min-width: 0 !important;
+  }
+}
+
+
+/* ===========================
+   MOBILE: Correção definitiva
+   Colocar ESTE bloco como o ÚNICO @media mobile (no final do arquivo)
+   =========================== */
+@media (max-width: 650px) {
+  /* card principal */
+  .card {
+    display: flex !important;
+    flex-direction: row !important;      /* mantém horizontal como desktop */
+    align-items: flex-start !important;
+    gap: 12px !important;
+    padding: 12px !important;
     width: 100% !important;
   }
 
-  /* CARRINHO – coloca em baixo, como um bloco */
-  .cart {
-    position: relative !important;
-    top: 0 !important;
-    width: 100% !important;
-    margin-top: 20px !important;
+  /* thumb: tamanho fixo, não encolhe nem expande */
+  .card .thumb {
+    width: 86px !important;
+    height: 86px !important;
+    flex: 0 0 86px !important;
+    min-width: 86px !important;
+    max-width: 86px !important;
+    overflow: hidden !important;
   }
+  .card .thumb img { width:100%; height:100%; object-fit:cover; display:block; }
 
-  .cart .items {
-    max-height: 260px !important;
-  }
-
-  .finalize {
+  /* info: ocupa o espaço restante — importantíssimo ter min-width:0 */
+  .card .info {
+    flex: 1 1 auto !important;
+    min-width: 0 !important; /* evita que o texto force overflow */
+    display: flex !important;
     flex-direction: column !important;
+    justify-content: flex-start !important;
   }
 
+  .card .info h3 {
+    font-size: 16px !important;
+    line-height: 1.2 !important;
+    margin: 0 0 6px 0 !important;
+    font-weight: 700 !important;
+    word-break: normal !important;
+    overflow-wrap: break-word !important;
+    white-space: normal !important;
+  }
+
+  .card .info p {
+    font-size: 13px !important;
+    line-height: 1.35 !important;
+    margin: 0 !important;
+    color: #6a4e47 !important;
+    word-break: normal !important;
+    overflow-wrap: break-word !important;
+  }
+
+  /* actions: largura controlada para não roubar espaço do .info */
+  .card .actions {
+    flex: 0 0 120px !important; /* ajusta esse valor se quiser mais/menos espaço */
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: flex-end !important;
+    justify-content: center !important;
+    gap: 8px !important;
+  }
+
+  /* preço alinhado no topo do bloco actions */
+  .card .actions .price {
+    font-size: 15px !important;
+    font-weight: 800 !important;
+    margin-bottom: 6px !important;
+    white-space: nowrap !important;
+  }
+
+  /* conjunto quantidade + botão em linha dentro do bloco actions */
+  .card .actions > div {
+    display: flex !important;
+    flex-direction: row !important;
+    align-items: center !important;
+    gap: 8px !important;
+    justify-content: flex-end !important;
+    width: 100% !important;
+  }
+
+  .qty { display:flex; align-items:center; gap:6px; }
+  .qty button { padding:6px 10px !important; }
+
+  .add-btn {
+    padding: 8px 12px !important;
+    font-size: 13px !important;
+    white-space: nowrap !important;
+    border-radius: 10px !important;
+  }
+
+  /* garantir que nenhum elemento force overflow do flex item */
+  .card * {
+    min-width: 0 !important;
+  }
 }
 
 
 
 
+
+
+/* ===========================
+   Ações em coluna (igual imagem)
+   =========================== */
+@media (max-width: 650px) {
+
+  .card .actions {
+    flex: 0 0 120px !important;
+    display: flex !important;
+    flex-direction: column !important;   /* preço → quantidade → botão */
+    align-items: flex-end !important;
+    justify-content: flex-start !important;
+    gap: 10px !important;
+  }
+
+  /* Preço fica no topo */
+  .card .actions .price {
+    font-size: 15px !important;
+    font-weight: 800 !important;
+    white-space: nowrap !important;
+    margin-bottom: 4px !important;
+    align-self: flex-end !important;
+  }
+
+  /* QUANTIDADE: bloco sozinho abaixo do preço */
+  .card .actions > div {
+    width: auto !important;
+    display: flex !important;
+    flex-direction: row !important;
+    justify-content: flex-end !important;
+    align-items: center !important;
+    gap: 8px !important;
+  }
+
+  /* Botão Adicionar embaixo da quantidade */
+  .card .add-btn {
+    align-self: flex-end !important;
+    padding: 8px 16px !important;
+    font-size: 13px !important;
+    white-space: nowrap !important;
+    margin-top: 0 !important;
+  }
+}
+
+
+
+
+
+
+/* ==========================================
+   MOBILE — layout igual o da sua imagem
+   ========================================== */
+@media (max-width: 650px) {
+
+  /* card continua horizontal */
+  .card {
+    display: grid !important;
+    grid-template-columns: 86px 1fr 120px !important;
+    gap: 12px !important;
+    padding: 12px !important;
+    width: 100% !important;
+    align-items: flex-start !important;
+  }
+
+  /* imagem */
+  .card .thumb {
+    width: 86px !important;
+    height: 86px !important;
+    border-radius: 10px;
+    overflow: hidden;
+  }
+
+  .card .thumb img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  /* texto */
+  .card .info {
+    min-width: 0 !important; /* impede o texto de ser esmagado */
+  }
+
+  .card .info h3 {
+    font-size: 16px !important;
+    margin-bottom: 5px;
+    line-height: 1.2;
+    font-weight: 700;
+  }
+
+  .card .info p {
+    font-size: 13px;
+    line-height: 1.35;
+    color: #664;
+  }
+
+  /* ====== AÇÕES ====== */
+  .card .actions {
+    display: flex !important;
+    flex-direction: column !important;  /* vira coluna */
+    align-items: flex-end !important;
+    gap: 10px !important;
+  }
+
+  /* preço */
+  .card .actions .price {
+    font-weight: 800;
+    font-size: 15px;
+    white-space: nowrap;
+  }
+
+  /* AQUI ESTÁ A MÁGICA REAL:
+     o DIV que contém quantidade + botão
+     vira uma COLUNA para colocar
+     o botão ADICIONAR embaixo */
+  .card .actions > div {
+    display: flex !important;
+    flex-direction: column !important;  /* força empilhar */
+    align-items: flex-end !important;   /* alinha à direita */
+    gap: 8px !important;
+    width: 100% !important;
+  }
+
+  /* quantidade fica certinha na primeira linha */
+  .card .actions .qty {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+  }
+
+  /* botão adicionar sozinho embaixo */
+  .card .add-btn {
+    padding: 8px 14px !important;
+    font-size: 13px !important;
+    white-space: nowrap !important;
+    border-radius: 10px !important;
+  }
+}
 
 
 
@@ -418,7 +646,7 @@ header img.logo {
 
             <!-- f2 -->
             <div class="card" data-id="f2" data-name="Cachorro quente abraçado - Linguiça" data-price="20.00">
-              <div class="thumb"><img src="f2.png" alt="Cachorro quente linguiça" /></div>
+              <div class="thumb"><img src="cachoro_q.png" alt="Cachorro quente linguiça" /></div>
               <div class="info">
                 <h3>Cachorro quente abraçado - Linguiça</h3>
                 <p>Salsicha, Molho , milho, ovo, mussarela, batata palha e molho da casa.</p>
@@ -434,7 +662,7 @@ header img.logo {
 
             <!-- f3 -->
             <div class="card" data-id="f3" data-name="Cachorro quente abraçado - Frango" data-price="28.00">
-              <div class="thumb"><img src="f3.png" alt="Cachorro quente frango" /></div>
+              <div class="thumb"><img src="cachoro_q.png" alt="Cachorro quente frango" /></div>
               <div class="info">
                 <h3>Cachorro quente abraçado - Frango</h3>
                 <p>Frango desfiado, molho, milho, mussarela, ovo, batata palha e molho da casa.</p>
