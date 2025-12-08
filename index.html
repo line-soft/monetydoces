@@ -263,6 +263,129 @@ header img.logo {
       .cart{position:relative;top:0}
     }
 
+
+
+/* ===== CORREÇÃO MOBILE REAL ===== */
+@media (max-width: 900px) {
+
+  body {
+    padding: 10px !important;
+  }
+
+  /* Logo */
+  header {
+    margin-bottom: 12px !important;
+    padding: 0 !important;
+    box-shadow: none !important;
+  }
+
+  header img.logo {
+    width: 90% !important;
+    max-width: 260px !important;
+    padding: 0 !important;
+  }
+
+  /* Grid vira 1 coluna */
+  .page {
+    grid-template-columns: 1fr !important;
+    gap: 0 !important;
+  }
+
+  /* Cardápio ocupa toda a largura */
+  .menu {
+    padding: 10px !important;
+    margin: 0 !important;
+  }
+
+  /* CARDS – corrigir alinhamento e tamanho */
+  .card {
+    flex-direction: row !important;
+    align-items: flex-start !important;
+    padding: 10px !important;
+    gap: 10px !important;
+  }
+
+  .card .thumb {
+    width: 85px !important;
+    height: 85px !important;
+    flex-shrink: 0 !important;
+  }
+
+  .card .info h3 {
+    font-size: 14px !important;
+    line-height: 1.2 !important;
+  }
+
+  .card .info p {
+    font-size: 12px !important;
+  }
+
+  /* Ações ficam alinhadas e sem quebrar */
+  .card .actions {
+    width: 100%;
+    align-items: flex-end !important;
+    gap: 6px !important;
+  }
+
+  .price {
+    font-size: 15px !important;
+  }
+
+  .qty button {
+    padding: 6px 10px !important;
+  }
+
+  /* Ajusta botões */
+  .add-btn {
+    padding: 7px 10px !important;
+    font-size: 12px !important;
+  }
+
+  /* BEBIDAS – impedindo que fiquem minúsculas */
+  .products[style] .card {
+    width: 100% !important;
+  }
+
+  /* CARRINHO – coloca em baixo, como um bloco */
+  .cart {
+    position: relative !important;
+    top: 0 !important;
+    width: 100% !important;
+    margin-top: 20px !important;
+  }
+
+  .cart .items {
+    max-height: 260px !important;
+  }
+
+  .finalize {
+    flex-direction: column !important;
+  }
+
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
   </style>
 </head>
 <body>
