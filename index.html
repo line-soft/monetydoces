@@ -1,1140 +1,546 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>Cardápio - Monetys Doces (exemplo)</title>
-  <style>
-    :root{
-      --pink:#F7C6CE;      /* fundo da logo */
-      --choco:#4B2B20;     /* marrom do texto */
-      --accent:#D66FA8;    /* rosa destaque */
-      --muted:#f3f3f3;
-      --card-radius:14px;
-      --gap:18px;
-      --max-width:1000px;
-    }
-
-    *{box-sizing:border-box}
-    body{
-      margin:0;
-      font-family:Inter, "Helvetica Neue", Arial, sans-serif;
-      background: linear-gradient(180deg,#fff 0%, #fff 50%, #fcfcfc 100%);
-      color:var(--choco);
-      -webkit-font-smoothing:antialiased;
-      -moz-osx-font-smoothing:grayscale;
-      padding:24px;
-      display:flex;
-      justify-content:center;
-    }
-
-    .container{
-      width:100%;
-      max-width:var(--max-width);
-    }
-
-    header{
-      display:flex;
-      align-items:center;
-      justify-content:center;
-      gap:16px;
-      margin-bottom:18px;
-      position:sticky;
-      top:0;
-      z-index:20;
-      background: rgba(255,255,255,0.9);
-      padding:12px 6px;
-      border-radius:12px;
-      box-shadow:0 6px 18px rgba(0,0,0,0.06);
-      position: static !important; /* garante que o header não fique seguindo a página */
-    }
-
-header img.logo {
-  display: block !important;
-  width: 80vw !important;    
-  max-width: 300px !important;
-  height: auto !important;
-  object-fit: contain !important;
-  border-radius: 30px !important;
-  padding: 6px !important;
-  margin: 0 auto !important;
-  box-sizing: border-box !important;
-  max-height: none !important;
-
-  /* 🔥 Garantir que NÃO fique fixo */
-  position: static !important;
-}
-
-    .page{
-      display:grid;
-      grid-template-columns: 1fr 320px;
-      gap:20px;
-      align-items:start;
-    }
-
-    /* Left column (menu) */
-    .menu{
-      background: linear-gradient(180deg, rgba(255,255,255,0.6), rgba(255,255,255,0.9));
-      padding:18px;
-      border-radius:18px;
-      box-shadow:0 10px 30px rgba(0,0,0,0.04);
-    }
-
-    .section{
-      margin-bottom:26px;
-    }
-
-    .section h2{
-      margin:0 0 12px 0;
-      padding:10px 12px;
-      background:linear-gradient(90deg, rgba(214,111,168,0.08), rgba(247,198,206,0.03));
-      border-left:6px solid var(--accent);
-      color:var(--choco);
-      border-radius:10px;
-      font-size:18px;
-      font-weight:700;
-      display:flex;
-      align-items:center;
-      gap:10px;
-    }
-
-    .products{
-      display:flex;
-      flex-direction:column;
-      gap:12px;
-    }
-
-    .card{
-      display:flex;
-      gap:12px;
-      align-items:center;
-      background:#fff;
-      border-radius:12px;
-      padding:12px;
-      box-shadow:0 6px 18px rgba(75,43,32,0.04);
-      border:1px solid rgba(75,43,32,0.03);
-    }
-
-    .card .thumb{
-      width:86px;
-      height:86px;
-      border-radius:10px;
-      background:var(--muted);
-      display:flex;
-      align-items:center;
-      justify-content:center;
-      overflow:hidden;
-      flex-shrink:0;
-      border:1px dashed rgba(0,0,0,0.04);
-    }
-    .card .thumb img{
-      width:100%;
-      height:100%;
-      object-fit:cover;
-      display:block;
-    }
-
-    .card .info{
-      flex:1;
-    }
-    .card .info h3{
-      margin:0;
-      font-size:15px;
-      color:var(--choco);
-    }
-    .card .info p{
-      margin:6px 0 0 0;
-      font-size:13px;
-      color:#6a4e47;
-      line-height:1.2;
-    }
-
-    .card .actions{
-      display:flex;
-      flex-direction:column;
-      gap:8px;
-      align-items:flex-end;
-      justify-content:center;
-    }
-
-    .price{
-      font-weight:800;
-      color:var(--choco);
-    }
-
-    .qty{
-      display:flex;
-      align-items:center;
-      gap:8px;
-      border-radius:999px;
-      overflow:hidden;
-      background:#fafafa;
-      border:1px solid rgba(0,0,0,0.05);
-    }
-    .qty button{
-      background:transparent;
-      border:0;
-      padding:8px 12px;
-      cursor:pointer;
-      font-size:16px;
-      color:var(--choco);
-    }
-    .qty span{min-width:30px;text-align:center;font-weight:700;}
-
-    .add-btn{
-      background:var(--accent);
-      color:white;
-      border:0;
-      padding:8px 12px;
-      border-radius:8px;
-      cursor:pointer;
-      font-weight:700;
-      font-size:13px;
-      box-shadow:0 6px 18px rgba(214,111,168,0.12);
-    }
-
-    /* right column (cart) */
-    .cart{
-      position:sticky;
-      top:22px;
-      align-self:start;
-      background:linear-gradient(180deg,#fff,#fff);
-      padding:16px;
-      border-radius:14px;
-      border:1px solid rgba(75,43,32,0.04);
-      box-shadow:0 12px 30px rgba(0,0,0,0.04);
-    }
-    .cart h3{margin:0 0 10px 0;color:var(--choco);}
-    .cart .items{display:flex;flex-direction:column;gap:8px;max-height:380px;overflow:auto;padding-right:6px;}
-    .cart .item{display:flex;justify-content:space-between;gap:8px;align-items:center}
-    .cart .item .name{font-weight:700}
-    .total{display:flex;justify-content:space-between;align-items:center;margin-top:10px;font-weight:800;font-size:18px}
-    .finalize{
-      margin-top:12px;
-      display:flex;
-      gap:8px;
-      width:100%;
-    }
-    .btn-primary{
-      flex:1;
-      background:var(--choco);
-      color:white;
-      border:0;
-      padding:12px;
-      border-radius:10px;
-      cursor:pointer;
-      font-weight:800;
-    }
-    .btn-wpp{
-      background:var(--accent);
-      color:white;
-      border:0;
-      padding:12px;
-      border-radius:10px;
-      cursor:pointer;
-      font-weight:700;
-    }
-
-    /* modal */
-    .modal{
-      position:fixed;
-      inset:0;
-      display:none;
-      align-items:center;
-      justify-content:center;
-      z-index:60;
-      background:rgba(0,0,0,0.45);
-    }
-    .modal.open{display:flex}
-    .modal .box{
-      width:min(720px,94%);
-      background:white;
-      border-radius:14px;
-      padding:18px;
-    }
-    .modal .box h4{margin:0 0 10px 0}
-    .modal .line{display:flex;justify-content:space-between;padding:8px 0;border-bottom:1px dashed rgba(0,0,0,0.04)}
-    .close{background:transparent;border:0;color:#666;padding:8px;cursor:pointer}
-
-    /* responsive */
-    @media (max-width:900px){
-      .page{grid-template-columns:1fr}
-      header img.logo{height:70px}
-      .cart{position:relative;top:0}
-    }
-
-/* ==========================================
-   MOBILE CORRIGIDO — LAYOUT FIEL AO DESKTOP
-   ========================================== */
-
-
-  /* Imagem */
-  .card .thumb {
-    width: 80px !important;
-    height: 80px !important;
-    flex-shrink: 0 !important;
-    border-radius: 10px !important;
-    object-fit: cover !important;
-  }
-
-  /* Bloco de texto */
-  .card .info {
-    flex: 1 !important;
-    display: flex !important;
-    flex-direction: column !important;
-    justify-content: flex-start !important;
-  }
-
-  .card .info h3 {
-    font-size: 16px !important;
-    line-height: 1.2 !important;
-    margin-bottom: 6px !important;
-    color: #4a2e2e !important;
-    font-weight: 700 !important;
-  }
-
-  .card .info p {
-    font-size: 13px !important;
-    line-height: 1.35 !important;
-    margin-bottom: 8px !important;
-    color: #6a4a4a !important;
-  }
-
-  /* Ações do card (preço + quantidade + botão) */
-  .card .actions {
-    display: flex !important;
-    flex-direction: column !important;
-    align-items: flex-end !important;
-    justify-content: center !important;
-    gap: 8px !important;
-    min-width: 110px !important;
-  }
-
-  /* Preço no topo direito */
-  .card .actions .price {
-    font-size: 15px !important;
-    font-weight: 800 !important;
-    color: #4a2e2e !important;
-    margin-bottom: 4px !important;
-    white-space: nowrap !important;
-  }
-
-  /* Qtd + botão */
-  .card .actions > div {
-    display: flex !important;
-    flex-direction: row !important;
-    align-items: center !important;
-    gap: 10px !important;
-  }
-
-  .qty button {
-    padding: 6px 10px !important;
-  }
-
-  .add-btn {
-    padding: 8px 14px !important;
-    font-size: 13px !important;
-    border-radius: 12px !important;
-    white-space: nowrap !important;
-  }
-
-  /* Impede o texto de esmagar */
-  .card * {
-    min-width: 0 !important;
-  }
-}
-
-
-/* ===========================
-   MOBILE: Correção definitiva
-   Colocar ESTE bloco como o ÚNICO @media mobile (no final do arquivo)
-   =========================== */
-
-
-  /* thumb: tamanho fixo, não encolhe nem expande */
-  .card .thumb {
-    width: 86px !important;
-    height: 86px !important;
-    flex: 0 0 86px !important;
-    min-width: 86px !important;
-    max-width: 86px !important;
-    overflow: hidden !important;
-  }
-  .card .thumb img { width:100%; height:100%; object-fit:cover; display:block; }
-
-  /* info: ocupa o espaço restante — importantíssimo ter min-width:0 */
-  .card .info {
-    flex: 1 1 auto !important;
-    min-width: 0 !important; /* evita que o texto force overflow */
-    display: flex !important;
-    flex-direction: column !important;
-    justify-content: flex-start !important;
-  }
-
-  .card .info h3 {
-    font-size: 16px !important;
-    line-height: 1.2 !important;
-    margin: 0 0 6px 0 !important;
-    font-weight: 700 !important;
-    word-break: normal !important;
-    overflow-wrap: break-word !important;
-    white-space: normal !important;
-  }
-
-  .card .info p {
-    font-size: 13px !important;
-    line-height: 1.35 !important;
-    margin: 0 !important;
-    color: #6a4e47 !important;
-    word-break: normal !important;
-    overflow-wrap: break-word !important;
-  }
-
-  /* actions: largura controlada para não roubar espaço do .info */
-  .card .actions {
-    flex: 0 0 120px !important; /* ajusta esse valor se quiser mais/menos espaço */
-    display: flex !important;
-    flex-direction: column !important;
-    align-items: flex-end !important;
-    justify-content: center !important;
-    gap: 8px !important;
-  }
-
-  /* preço alinhado no topo do bloco actions */
-  .card .actions .price {
-    font-size: 15px !important;
-    font-weight: 800 !important;
-    margin-bottom: 6px !important;
-    white-space: nowrap !important;
-  }
-
-  /* conjunto quantidade + botão em linha dentro do bloco actions */
-  .card .actions > div {
-    display: flex !important;
-    flex-direction: row !important;
-    align-items: center !important;
-    gap: 8px !important;
-    justify-content: flex-end !important;
-    width: 100% !important;
-  }
-
-  .qty { display:flex; align-items:center; gap:6px; }
-  .qty button { padding:6px 10px !important; }
-
-  .add-btn {
-    padding: 8px 12px !important;
-    font-size: 13px !important;
-    white-space: nowrap !important;
-    border-radius: 10px !important;
-  }
-
-  /* garantir que nenhum elemento force overflow do flex item */
-  .card * {
-    min-width: 0 !important;
-  }
-}
-
-
-
-
-
-
-/* ===========================
-   Ações em coluna (igual imagem)
-   =========================== */
-
-
-  /* Preço fica no topo */
-  .card .actions .price {
-    font-size: 15px !important;
-    font-weight: 800 !important;
-    white-space: nowrap !important;
-    margin-bottom: 4px !important;
-    align-self: flex-end !important;
-  }
-
-  /* QUANTIDADE: bloco sozinho abaixo do preço */
-  .card .actions > div {
-    width: auto !important;
-    display: flex !important;
-    flex-direction: row !important;
-    justify-content: flex-end !important;
-    align-items: center !important;
-    gap: 8px !important;
-  }
-
-  /* Botão Adicionar embaixo da quantidade */
-  .card .add-btn {
-    align-self: flex-end !important;
-    padding: 8px 16px !important;
-    font-size: 13px !important;
-    white-space: nowrap !important;
-    margin-top: 0 !important;
-  }
-}
-
-
-
-
-
-
-/* ==========================================
-   MOBILE — layout igual o da sua imagem
-   ========================================== */
-
-
-  /* imagem */
-  .card .thumb {
-    width: 86px !important;
-    height: 86px !important;
-    border-radius: 10px;
-    overflow: hidden;
-  }
-
-  .card .thumb img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-  }
-
-  /* texto */
-  .card .info {
-    min-width: 0 !important; /* impede o texto de ser esmagado */
-  }
-
-  .card .info h3 {
-    font-size: 16px !important;
-    margin-bottom: 5px;
-    line-height: 1.2;
-    font-weight: 700;
-  }
-
-  .card .info p {
-    font-size: 13px;
-    line-height: 1.35;
-    color: #664;
-  }
-
-  /* ====== AÇÕES ====== */
-  .card .actions {
-    display: flex !important;
-    flex-direction: column !important;  /* vira coluna */
-    align-items: flex-end !important;
-    gap: 10px !important;
-  }
-
-  /* preço */
-  .card .actions .price {
-    font-weight: 800;
-    font-size: 15px;
-    white-space: nowrap;
-  }
-
-  /* AQUI ESTÁ A MÁGICA REAL:
-     o DIV que contém quantidade + botão
-     vira uma COLUNA para colocar
-     o botão ADICIONAR embaixo */
-  .card .actions > div {
-    display: flex !important;
-    flex-direction: column !important;  /* força empilhar */
-    align-items: flex-end !important;   /* alinha à direita */
-    gap: 8px !important;
-    width: 100% !important;
-  }
-
-  /* quantidade fica certinha na primeira linha */
-  .card .actions .qty {
-    display: flex;
-    align-items: center;
-    gap: 6px;
-  }
-
-  /* botão adicionar sozinho embaixo */
-  .card .add-btn {
-    padding: 8px 14px !important;
-    font-size: 13px !important;
-    white-space: nowrap !important;
-    border-radius: 10px !important;
-  }
-}
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-  
-@media (max-width: 650px) {
-  .card {
-    display: flex !important;
-    flex-direction: row !important;
-    align-items: flex-start !important;
-    gap: 12px !important;
-    width: 100% !important;
-  }
-  .card .thumb {
-    width: 80px !important;
-    height: 80px !important;
-    flex-shrink: 0 !important;
-  }
-  .card .thumb img {
-    width: 100%; height: 100%; object-fit: cover;
-  }
-  .card .info {
-    flex: 1 !important;
-    min-width: 0 !important;
-    overflow: hidden !important;
-  }
-  .card .info h3 {
-    font-size: 16px !important;
-    line-height: 1.2 !important;
-    margin-bottom: 6px !important;
-    white-space: normal !important;
-  }
-  .card .info p {
-    font-size: 13px !important;
-    line-height: 1.3 !important;
-    white-space: normal !important;
-  }
-  .card .actions {
-    width: 100px !important;
-    flex-shrink: 0 !important;
-    display: flex !important;
-    flex-direction: column !important;
-    align-items: flex-end !important;
-    gap: 8px !important;
-  }
-  .card .actions > div {
-    display: flex !important;
-    flex-direction: column !important;
-    gap: 6px !important;
-    align-items: flex-end !important;
-  }
-  .add-btn {
-    font-size: 13px !important;
-    padding: 8px 12px !important;
-    white-space: nowrap !important;
-  }
-}
-
-</style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Monety Doces</title>
+  <link rel="stylesheet" href="style.css">
 </head>
 <body>
-  <div class="container">
-    <header>
-      <img class="logo" src="logo.jpeg" alt="Logo"/>
-    </header>
+<div id="splash">
+  <img src="logo.png" alt="Logo" class="splash-logo">
+</div>
 
-    <main class="page" role="main">
-      <section class="menu" aria-label="Cardápio principal">
-        <!-- Section: Lanches -->
-        <div class="section" id="lanches">
-          <h2>Lanches</h2>
-          <div class="products">
-            <!-- f1 -->
-            <div class="card" data-id="f1" data-name="Cachorro quente abraçado - Salsicha" data-price="17.00">
-              <div class="thumb"><img src="cachoro_q.png" alt="Cachorro quente salsicha" onerror="this.style.opacity=.25" /></div>
-              <div class="info">
-                <h3>Cachorro quente abraçado - Salsicha</h3>
-                <p>Salsicha, Molho, milho, ovo, mussarela, batata palha e molho da casa.</p>
-              </div>
-              <div class="actions">
-                <div class="price">R$ 17,00</div>
-                <div style="display:flex;gap:8px;align-items:center;margin-top:8px">
-                  <div class="qty"><button class="dec">−</button><span class="count">1</span><button class="inc">+</button></div>
-                  <button class="add-btn">Adicionar</button>
-                </div>
-              </div>
-            </div>
+<header>
+  <img src="logo.png" alt="Logo DoceMania" class="logo">
+</header>
 
-            <!-- f2 -->
-            <div class="card" data-id="f2" data-name="Cachorro quente abraçado - Linguiça" data-price="20.00">
-              <div class="thumb"><img src="cachoro_q.png" alt="Cachorro quente linguiça" /></div>
-              <div class="info">
-                <h3>Cachorro quente abraçado - Linguiça</h3>
-                <p>Salsicha, Molho , milho, ovo, mussarela, batata palha e molho da casa.</p>
-              </div>
-              <div class="actions">
-                <div class="price">R$ 20,00</div>
-                <div style="display:flex;gap:8px;align-items:center;margin-top:8px">
-                  <div class="qty"><button class="dec">−</button><span class="count">1</span><button class="inc">+</button></div>
-                  <button class="add-btn">Adicionar</button>
-                </div>
-              </div>
-            </div>
+<main class="container">
 
-            <!-- f3 -->
-            <div class="card" data-id="f3" data-name="Cachorro quente abraçado - Frango" data-price="28.00">
-              <div class="thumb"><img src="cachoro_q.png" alt="Cachorro quente frango" /></div>
-              <div class="info">
-                <h3>Cachorro quente abraçado - Frango</h3>
-                <p>Frango desfiado, molho, milho, mussarela, ovo, batata palha e molho da casa.</p>
-              </div>
-              <div class="actions">
-                <div class="price">R$ 28,00</div>
-                <div style="display:flex;gap:8px;align-items:center;margin-top:8px">
-                  <div class="qty"><button class="dec">−</button><span class="count">1</span><button class="inc">+</button></div>
-                  <button class="add-btn">Adicionar</button>
-                </div>
-              </div>
-            </div>
 
-            <!-- f4 -->
-            <div class="card" data-id="f4" data-name="Sanduíche natural" data-price="15.00">
-              <div class="thumb"><img src="f4.png" alt="Sanduíche natural" /></div>
-              <div class="info">
-                <h3>Sanduíche natural</h3>
-                <p>Molho da casa, alface, tomate, queijo Prado, presunto, mussarela e salame.</p>
-              </div>
-              <div class="actions">
-                <div class="price">R$ 15,00</div>
-                <div style="display:flex;gap:8px;align-items:center;margin-top:8px">
-                  <div class="qty"><button class="dec">−</button><span class="count">1</span><button class="inc">+</button></div>
-                  <button class="add-btn">Adicionar</button>
-                </div>
-              </div>
-            </div>
+    <div class="produto">
+    <img src="xtudo.jpeg">
+    <div class="info">
+      <h3>X-TUDO C/ Guarativa</h3>
+      <p>Composto: Carne, presunto, queijo, linguiça,
+bacon, cheddan, tomate e alface.</p>
+      <span>R$ 13,00</span>
 
-            <!-- f5 -->
-            <div class="card" data-id="f5" data-name="Combo de sanduíche com suco" data-price="0.00">
-              <div class="thumb"><img src="f5.png" alt="Combo sanduíche suco" /></div>
-              <div class="info">
-                <h3>Combo de sanduíche com suco da fruta</h3>
-                <p>Maracujá, manga ou abacaxi.</p>
-              </div>
-              <div class="actions">
-                <div class="price">R$ 0,00</div>
-                <div style="display:flex;gap:8px;align-items:center;margin-top:8px">
-                  <div class="qty"><button class="dec">−</button><span class="count">1</span><button class="inc">+</button></div>
-                  <button class="add-btn">Adicionar</button>
-                </div>
-              </div>
-            </div>
-
-            <!-- f6 -->
-            <div class="card" data-id="f6" data-name="Pão de alho" data-price="35.00">
-              <div class="thumb"><img src="f6.png" alt="Pão de alho" /></div>
-              <div class="info">
-                <h3>Pão de alho</h3>
-                <p>Maionese de alho , coração, dupla camada de mussarela e cebolinha.</p>
-              </div>
-              <div class="actions">
-                <div class="price">R$ 35,00</div>
-                <div style="display:flex;gap:8px;align-items:center;margin-top:8px">
-                  <div class="qty"><button class="dec">−</button><span class="count">1</span><button class="inc">+</button></div>
-                  <button class="add-btn">Adicionar</button>
-                </div>
-              </div>
-            </div>
-
-            <!-- f7 -->
-            <div class="card" data-id="f7" data-name="Pão de alho linguiça suína" data-price="30.00">
-              <div class="thumb"><img src="f7.png" alt="Pão de alho linguiça" /></div>
-              <div class="info">
-                <h3>Pão de alho linguiça suína</h3>
-                <p>Maionese de alho , dupla camada de mussarela e cebolinha.</p>
-              </div>
-              <div class="actions">
-                <div class="price">R$ 30,00</div>
-                <div style="display:flex;gap:8px;align-items:center;margin-top:8px">
-                  <div class="qty"><button class="dec">−</button><span class="count">1</span><button class="inc">+</button></div>
-                  <button class="add-btn">Adicionar</button>
-                </div>
-              </div>
-            </div>
-
-            <!-- f8 -->
-            <div class="card" data-id="f8" data-name="Pão de alho de queijo" data-price="25.00">
-              <div class="thumb"><img src="f8.png" alt="Pão de alho queijo" /></div>
-              <div class="info">
-                <h3>Pão de alho de queijo</h3>
-                <p>Molho de alho , bacon em cubo, dupla camada de mussarela, creme cheese e cebolinha.</p>
-              </div>
-              <div class="actions">
-                <div class="price">R$ 25,00</div>
-                <div style="display:flex;gap:8px;align-items:center;margin-top:8px">
-                  <div class="qty"><button class="dec">−</button><span class="count">1</span><button class="inc">+</button></div>
-                  <button class="add-btn">Adicionar</button>
-                </div>
-              </div>
-            </div>
-
-            <!-- f9 -->
-            <div class="card" data-id="f9" data-name="Batata recheada - calabresa" data-price="25.00">
-              <div class="thumb"><img src="f9.png" alt="Batata recheada" /></div>
-              <div class="info">
-                <h3>Batata recheada - calabresa</h3>
-                <p>Cream cheese, mussarela, calabresa, bacon e cebolinha.</p>
-              </div>
-              <div class="actions">
-                <div class="price">R$ 25,00</div>
-                <div style="display:flex;gap:8px;align-items:center;margin-top:8px">
-                  <div class="qty"><button class="dec">−</button><span class="count">1</span><button class="inc">+</button></div>
-                  <button class="add-btn">Adicionar</button>
-                </div>
-              </div>
-            </div>
-
-            <!-- f10 -->
-            <div class="card" data-id="f10" data-name="Lasanha - Frango" data-price="25.00">
-              <div class="thumb"><img src="f10.png" alt="Lasanha frango" /></div>
-              <div class="info">
-                <h3>Lasanha - Frango</h3>
-                <p>Frango e dupla camada de mussarela ao molho branco.</p>
-              </div>
-              <div class="actions">
-                <div class="price">R$ 25,00</div>
-                <div style="display:flex;gap:8px;align-items:center;margin-top:8px">
-                  <div class="qty"><button class="dec">−</button><span class="count">1</span><button class="inc">+</button></div>
-                  <button class="add-btn">Adicionar</button>
-                </div>
-              </div>
-            </div>
-
-            <!-- f11 -->
-            <div class="card" data-id="f11" data-name="Lasanha - Bolonhesa" data-price="25.00">
-              <div class="thumb"><img src="f11.png" alt="Lasanha bolonhesa" /></div>
-              <div class="info">
-                <h3>Lasanha - Bolonhesa</h3>
-                <p>Molho sugo, presunto, mussarela e cebolinha.</p>
-              </div>
-              <div class="actions">
-                <div class="price">R$ 25,00</div>
-                <div style="display:flex;gap:8px;align-items:center;margin-top:8px">
-                  <div class="qty"><button class="dec">−</button><span class="count">1</span><button class="inc">+</button></div>
-                  <button class="add-btn">Adicionar</button>
-                </div>
-              </div>
-            </div>
-
-          </div>
-        </div>
-
-        <!-- Section: Hambúrguer tradicionais -->
-        <div class="section" id="burgers">
-          <h2>Hambúrguer tradicionais</h2>
-          <div class="products">
-            <div class="card" data-id="b1" data-name="X Burguer" data-price="9.00">
-              <div class="thumb"><img src="f12.png" alt="X Burguer" /></div>
-              <div class="info"><h3>X Burguer</h3><p>Pão, alface, tomate,1 carne, queijo, presunto e molho da casa.</p></div>
-              <div class="actions"><div class="price">R$ 9,00</div><div style="display:flex;gap:8px;align-items:center;margin-top:8px"><div class="qty"><button class="dec">−</button><span class="count">1</span><button class="inc">+</button></div><button class="add-btn">Adicionar</button></div></div>
-            </div>
-
-            <div class="card" data-id="b2" data-name="X Bacon" data-price="11.00">
-              <div class="thumb"><img src="f13.png" alt="X Bacon" /></div>
-              <div class="info"><h3>X Bacon</h3><p>Pão, alface, tomate,1 carne, bacon, 1 ovo, queijo, presunto e molho da casa.</p></div>
-              <div class="actions"><div class="price">R$ 11,00</div><div style="display:flex;gap:8px;align-items:center;margin-top:8px"><div class="qty"><button class="dec">−</button><span class="count">1</span><button class="inc">+</button></div><button class="add-btn">Adicionar</button></div></div>
-            </div>
-
-            <div class="card" data-id="b3" data-name="X Tudo" data-price="15.00">
-              <div class="thumb"><img src="f14.png" alt="X Tudo" /></div>
-              <div class="info"><h3>X Tudo</h3><p>Pão, alface, tomate,1 carne, bacon, calabresa, presunto, queijo, batata palha e molho da casa.</p></div>
-              <div class="actions"><div class="price">R$ 15,00</div><div style="display:flex;gap:8px;align-items:center;margin-top:8px"><div class="qty"><button class="dec">−</button><span class="count">1</span><button class="inc">+</button></div><button class="add-btn">Adicionar</button></div></div>
-            </div>
-
-            <div class="card" data-id="b4" data-name="X Frango" data-price="16.00">
-              <div class="thumb"><img src="f15.png" alt="X Frango" /></div>
-              <div class="info"><h3>X Frango</h3><p>Pão, alface, tomate, frango desfiado, bacon, calabresa, mussarela e molho da casa.</p></div>
-              <div class="actions"><div class="price">R$ 16,00</div><div style="display:flex;gap:8px;align-items:center;margin-top:8px"><div class="qty"><button class="dec">−</button><span class="count">1</span><button class="inc">+</button></div><button class="add-btn">Adicionar</button></div></div>
-            </div>
-          </div>
-        </div>
-
-        <!-- Section: Refeição -->
-        <div class="section" id="refeicoes">
-          <h2>Refeição</h2>
-          <div class="products">
-            <div class="card" data-id="r1" data-name="Isca de fígado c/ purê" data-price="17.90">
-              <div class="thumb"><img src="f16.png" alt="Isca fígado" /></div>
-              <div class="info"><h3>Isca de fígado c/ purê</h3><p>Arroz, feijão, isca de fígado com purê. Todas refeições vão salada 🥗.</p></div>
-              <div class="actions"><div class="price">R$ 17,90</div><div style="display:flex;gap:8px;align-items:center;margin-top:8px"><div class="qty"><button class="dec">−</button><span class="count">1</span><button class="inc">+</button></div><button class="add-btn">Adicionar</button></div></div>
-            </div>
-
-            <div class="card" data-id="r2" data-name="Linguiça e frango c/ bacon" data-price="22.90">
-              <div class="thumb"><img src="f17.png" alt="Ref 2" /></div>
-              <div class="info"><h3>Linguiça e frango c/ bacon</h3><p>Arroz, feijão, linguiça, frango com bacon, maionese de ovo e farofa.</p></div>
-              <div class="actions"><div class="price">R$ 22,90</div><div style="display:flex;gap:8px;align-items:center;margin-top:8px"><div class="qty"><button class="dec">−</button><span class="count">1</span><button class="inc">+</button></div><button class="add-btn">Adicionar</button></div></div>
-            </div>
-
-            <div class="card" data-id="r3" data-name="Frango a mediana c/ purê" data-price="21.90">
-              <div class="thumb"><img src="f18.png" alt="Ref 3" /></div>
-              <div class="info"><h3>Frango a mediana</h3><p>Frango a mediana, arroz, feijão e purê.</p></div>
-              <div class="actions"><div class="price">R$ 21,90</div><div style="display:flex;gap:8px;align-items:center;margin-top:8px"><div class="qty"><button class="dec">−</button><span class="count">1</span><button class="inc">+</button></div><button class="add-btn">Adicionar</button></div></div>
-            </div>
-
-            <div class="card" data-id="r4" data-name="Linguiça calabresa acebolada" data-price="15.90">
-              <div class="thumb"><img src="f19.png" alt="Ref 4" /></div>
-              <div class="info"><h3>Linguiça calabresa acebolada</h3><p>Arroz, feijão, linguiça calabresa acebolada e maionese.</p></div>
-              <div class="actions"><div class="price">R$ 15,90</div><div style="display:flex;gap:8px;align-items:center;margin-top:8px"><div class="qty"><button class="dec">−</button><span class="count">1</span><button class="inc">+</button></div><button class="add-btn">Adicionar</button></div></div>
-            </div>
-
-            <div class="card" data-id="r5" data-name="Bife acebolado c/ acompanhamentos" data-price="28.90">
-              <div class="thumb"><img src="f20.png" alt="Ref 5" /></div>
-              <div class="info"><h3>Bife acebolado</h3><p>Bife acebolado, arroz, feijão, farofa, maionese ou fritas.</p></div>
-              <div class="actions"><div class="price">R$ 28,90</div><div style="display:flex;gap:8px;align-items:center;margin-top:8px"><div class="qty"><button class="dec">−</button><span class="count">1</span><button class="inc">+</button></div><button class="add-btn">Adicionar</button></div></div>
-            </div>
-
-          </div>
-        </div>
-
-        <!-- Section: Sobremesa -->
-        <div class="section" id="sobremesas">
-          <h2>Sobremesa</h2>
-          <div class="products">
-            <div class="card" data-id="s1" data-name="Bolo de pote choco menta" data-price="9.00">
-              <div class="thumb"><img src="f21.png" alt="Bolo de pote" /></div>
-              <div class="info"><h3>Bolo de pote choco menta</h3><p>Musse de chocolate.</p></div>
-              <div class="actions"><div class="price">R$ 9,00</div><div style="display:flex;gap:8px;align-items:center;margin-top:8px"><div class="qty"><button class="dec">−</button><span class="count">1</span><button class="inc">+</button></div><button class="add-btn">Adicionar</button></div></div>
-            </div>
-
-            <div class="card" data-id="s2" data-name="Musse de Ferrero Rocher" data-price="9.00">
-              <div class="thumb"><img src="f22.png" alt="Musse" /></div>
-              <div class="info"><h3>Musse Ferrero Rocher</h3><p>Delicioso e cremoso.</p></div>
-              <div class="actions"><div class="price">R$ 9,00</div><div style="display:flex;gap:8px;align-items:center;margin-top:8px"><div class="qty"><button class="dec">−</button><span class="count">1</span><button class="inc">+</button></div><button class="add-btn">Adicionar</button></div></div>
-            </div>
-
-            <div class="card" data-id="s3" data-name="Pavê de maracujá c/ chocolate" data-price="12.90">
-              <div class="thumb"><img src="f23.png" alt="Pavê maracujá" /></div>
-              <div class="info"><h3>Pavê de maracujá c/ chocolate</h3><p>Sabor equilibrado.</p></div>
-              <div class="actions"><div class="price">R$ 12,90</div><div style="display:flex;gap:8px;align-items:center;margin-top:8px"><div class="qty"><button class="dec">−</button><span class="count">1</span><button class="inc">+</button></div><button class="add-btn">Adicionar</button></div></div>
-            </div>
-
-            <div class="card" data-id="s4" data-name="Pudim" data-price="7.00">
-              <div class="thumb"><img src="f24.png" alt="Pudim" /></div>
-              <div class="info"><h3>Pudim</h3><p>Clássico.</p></div>
-              <div class="actions"><div class="price">R$ 7,00</div><div style="display:flex;gap:8px;align-items:center;margin-top:8px"><div class="qty"><button class="dec">−</button><span class="count">1</span><button class="inc">+</button></div><button class="add-btn">Adicionar</button></div></div>
-            </div>
-
-          </div>
-        </div>
-
-        <!-- Section: Bebidas -->
-        <div class="section" id="bebidas">
-          <h2>Bebidas</h2>
-          <div class="products" style="flex-direction:row;flex-wrap:wrap;gap:12px">
-            <!-- grid style for drinks -->
-            <div class="card" data-id="d1" data-name="Coca 1L" data-price="12.00" style="width:calc(50% - 6px)">
-              <div class="thumb"><img src="f25.png" alt="Coca 1L" /></div>
-              <div class="info"><h3>Coca 1L</h3><p>Refri 1 litro.</p></div>
-              <div class="actions"><div class="price">R$ 12,00</div><div style="display:flex;gap:8px;align-items:center;margin-top:8px"><div class="qty"><button class="dec">−</button><span class="count">1</span><button class="inc">+</button></div><button class="add-btn">Adicionar</button></div></div>
-            </div>
-
-            <div class="card" data-id="d2" data-name="Guaraná 1L" data-price="11.00" style="width:calc(50% - 6px)">
-              <div class="thumb"><img src="f26.png" alt="Guaraná 1L" /></div>
-              <div class="info"><h3>Guaraná 1L</h3><p>Refri 1 litro.</p></div>
-              <div class="actions"><div class="price">R$ 11,00</div><div style="display:flex;gap:8px;align-items:center;margin-top:8px"><div class="qty"><button class="dec">−</button><span class="count">1</span><button class="inc">+</button></div><button class="add-btn">Adicionar</button></div></div>
-            </div>
-
-            <div class="card" data-id="d3" data-name="Coca Lata 350ml" data-price="6.00" style="width:calc(50% - 6px)">
-              <div class="thumb"><img src="f27.png" alt="Coca lata" /></div>
-              <div class="info"><h3>Coca lata 350ml</h3><p>R$ 6,00</p></div>
-              <div class="actions"><div class="price">R$ 6,00</div><div style="display:flex;gap:8px;align-items:center;margin-top:8px"><div class="qty"><button class="dec">−</button><span class="count">1</span><button class="inc">+</button></div><button class="add-btn">Adicionar</button></div></div>
-            </div>
-
-            <div class="card" data-id="d4" data-name="Suco de maracujá 500ml" data-price="12.00" style="width:calc(50% - 6px)">
-              <div class="thumb"><img src="f28.png" alt="Suco maracuja" /></div>
-              <div class="info"><h3>Suco de maracujá 500ml</h3><p>R$ 12,00</p></div>
-              <div class="actions"><div class="price">R$ 12,00</div><div style="display:flex;gap:8px;align-items:center;margin-top:8px"><div class="qty"><button class="dec">−</button><span class="count">1</span><button class="inc">+</button></div><button class="add-btn">Adicionar</button></div></div>
-            </div>
-
-          </div>
-        </div>
-
-      </section>
-
-      <!-- Right: cart -->
-      <aside class="cart" aria-label="Carrinho">
-        <h3>Seu Pedido</h3>
-        <div class="items" id="cart-items">
-          <div style="color:#8b766f">Nenhum item adicionado ainda.</div>
-        </div>
-        <div class="total"><span>Total</span><span id="totalValue">R$ 0,00</span></div>
-        <div class="finalize">
-          <button class="btn-primary" id="openSummaryBtn">Ver resumo</button>
-          <button class="btn-wpp" id="sendWppBtn">Enviar via WhatsApp</button>
-        </div>
-      </aside>
-    </main>
-
-    <!-- Modal resumo -->
-    <div class="modal" id="modal">
-      <div class="box" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
-        <div style="display:flex;justify-content:space-between;align-items:center">
-          <h4 id="modalTitle">Resumo do pedido</h4>
-          <button class="close" id="closeModal">Fechar ✕</button>
-        </div>
-        <div id="modalContent" style="margin-top:8px">
-          <p style="color:#6b4d46">Nenhum item.</p>
-        </div>
-        <div style="display:flex;justify-content:flex-end;gap:8px;margin-top:12px">
-          <button class="btn-wpp" id="modalWpp">Enviar via WhatsApp</button>
-          <button class="btn-primary" id="confirmBtn">Confirmar</button>
-        </div>
+      <div class="acoes">
+         <button class="btn-add" onclick="adicionarCarrinho('xtudo')">
+    Adicionar
+  </button>
+</div>
       </div>
     </div>
-
   </div>
 
-  <script>
-    // Helper formatting
-    const fmt = v => v.toLocaleString('pt-BR', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+    <div class="produto">
+    <img src="xcalabresa.jpeg">
+    <div class="info">
+      <h3>X CALABRESA</h3>
+      <p>Composto: Carne, vinagre, queijo, calabresa e molho da casa </p>
+      <span>R$ 12,00</span>
 
-    // cart state
-    const cart = {};
+      <div class="acoes">
+         <button class="btn-add" onclick="adicionarCarrinho('xcalabresa')">
+    Adicionar
+  </button>
+</div>
+      </div>
+    </div>
+  </div>
 
-    // initialize controls
-    document.querySelectorAll('.card').forEach(card => {
-      const dec = card.querySelector('.dec');
-      const inc = card.querySelector('.inc');
-      const countEl = card.querySelector('.count');
-      const addBtn = card.querySelector('.add-btn');
+    <div class="produto">
+    <img src="xfrango.jpeg">
+    <div class="info">
+      <h3>X FRANGO</h3>
+      <p>Composto:  Frango, queijo, tomate, alface e molho da casa.</p>
+      <span>R$ 15,00</span>
 
-      dec.addEventListener('click', () => {
-        let n = parseInt(countEl.textContent || '1', 10);
-        if (n > 1) countEl.textContent = (n - 1);
-      });
-      inc.addEventListener('click', () => {
-        let n = parseInt(countEl.textContent || '1', 10);
-        countEl.textContent = (n + 1);
-      });
+      <div class="acoes">
+         <button class="btn-add" onclick="adicionarCarrinho('xfrango')">
+    Adicionar
+  </button>
+</div>
+      </div>
+    </div>
+  </div>
 
-      addBtn.addEventListener('click', () => {
-        const id = card.dataset.id;
-        const name = card.dataset.name;
-        const price = parseFloat(card.dataset.price);
-        const qty = parseInt(card.querySelector('.count').textContent,10) || 1;
+    <div class="produto">
+    <img src="cachorro_quente.jpeg">
+    <div class="info">
+      <h3>Cachorro Quente</h3>
+      <p>Composto:  Salsicha ou linguiça, vinagrete, bacon, linguiça, cheddar e molho da casa</p>
+      <select id="tipo-cachorroquente">
+<option value="17">Salsicha - R$17</option>
+<option value="19">Linguiça - R$19</option>
+</select>
 
-        if (cart[id]) {
-          cart[id].qty += qty;
-        } else {
-          cart[id] = { id, name, price, qty };
-        }
-        updateCartUI();
-        // small pulse
-        addBtn.animate([{transform:'scale(1)'},{transform:'scale(0.98)'},{transform:'scale(1)'}],{duration:200});
-      });
-    });
+      <div class="acoes">
+         <button class="btn-add" onclick="adicionarCarrinho('cachorroquente')">
+    Adicionar
+  </button>
+</div>
+      </div>
+    </div>
+  </div>
 
-    function updateCartUI(){
-      const itemsEl = document.getElementById('cart-items');
-      itemsEl.innerHTML = '';
-      const entries = Object.values(cart);
-      if (entries.length === 0){
-        itemsEl.innerHTML = '<div style="color:#8b766f">Nenhum item adicionado ainda.</div>';
-      } else {
-        entries.forEach(it => {
-          const div = document.createElement('div');
-          div.className = 'item';
-          div.innerHTML = `<div><div class="name">${it.name}</div><div style="font-size:13px;color:#6b4d46">R$ ${fmt(it.price)} x ${it.qty}</div></div>
-            <div style="display:flex;flex-direction:column;align-items:flex-end;gap:6px">
-              <div style="font-weight:800">R$ ${fmt(it.price * it.qty)}</div>
-              <div style="display:flex;gap:8px">
-                <button style="background:transparent;border:0;cursor:pointer" onclick="changeQty('${it.id}', -1)">−</button>
-                <button style="background:transparent;border:0;cursor:pointer" onclick="changeQty('${it.id}', +1)">+</button>
-                <button style="background:transparent;border:0;color:#b04f70;cursor:pointer" onclick="removeItem('${it.id}')">Remover</button>
-              </div>
-            </div>`;
-          itemsEl.appendChild(div);
-        });
-      }
-      // update total
-      const total = entries.reduce((s,it)=> s + (it.price * it.qty), 0);
-      document.getElementById('totalValue').textContent = 'R$ ' + fmt(total);
-    }
+<div class="produto">
+    <img src="Cachorro_Coreano.jpeg">
+    <div class="info">
+      <h3>Cachorro Quente Coreano</h3>
+      <p>Composto: Salsicha,queijo e todo empanado com Panco e molho da casa.</p>
+      <span>R$ 13,00</span>
 
-    function changeQty(id, diff){
-      if (!cart[id]) return;
-      cart[id].qty += diff;
-      if (cart[id].qty <= 0) delete cart[id];
-      updateCartUI();
-    }
-    function removeItem(id){
-      delete cart[id];
-      updateCartUI();
-    }
+      <div class="acoes">
+  
+         <button class="btn-add" onclick="adicionarCarrinho('CachorroQuenteCoreano')">
+    Adicionar
+  </button>
+</div>
+      </div>
+    </div>
+  </div>
 
-    // modal controls
-    const modal = document.getElementById('modal');
-    const openSummaryBtn = document.getElementById('openSummaryBtn');
-    const closeModal = document.getElementById('closeModal');
-    const modalContent = document.getElementById('modalContent');
+  <div class="produto">
+    <img src="espeto_coreano.jpeg">
+    <div class="info">
+      <h3>Espeto Coreano</h3>
+      <p>Composto: Rep 10 ,carne moída bem temperada,queijo e molho da casa.</p>
+      <span>R$ 17,00</span>
 
-    openSummaryBtn.addEventListener('click', () => {
-      renderModal();
-      modal.classList.add('open');
-    });
-    closeModal.addEventListener('click', () => modal.classList.remove('open'));
-    document.getElementById('confirmBtn').addEventListener('click', () => {
-      alert('Pedido confirmado! (exemplo). Você pode enviar via WhatsApp.');
-      modal.classList.remove('open');
-    });
+      <div class="acoes">
+  
+         <button class="btn-add" onclick="adicionarCarrinho('EspetoCoreano')">
+    Adicionar
+  </button>
+</div>
+      </div>
+    </div>
+  </div>
 
-    function renderModal(){
-      const items = Object.values(cart);
-      if (items.length === 0){
-        modalContent.innerHTML = '<p style="color:#6b4d46">Nenhum item no carrinho.</p>';
-        return;
-      }
-      let html = '';
-      items.forEach(it => {
-        html += `<div class="line"><div>${it.qty} × ${it.name}</div><div>R$ ${fmt(it.price * it.qty)}</div></div>`;
-      });
-      const total = items.reduce((s,it)=> s + it.price * it.qty, 0);
-      html += `<div style="display:flex;justify-content:space-between;margin-top:10px;font-weight:800">Total <span>R$ ${fmt(total)}</span></div>`;
-      modalContent.innerHTML = html;
-    }
+  
 
-    // WhatsApp send
-    const PHONE_NUMBER = 'PHONE_NUMBER'; // <- substitua pelo número do estabelecimento ex: 5511999999999
-    function buildWhatsAppMessage(){
-      const items = Object.values(cart);
-      if (items.length === 0) return '';
-      let text = 'Olá! Gostaria de fazer o pedido:%0A';
-      items.forEach(it => {
-        text += `${it.qty} x ${it.name} - R$ ${fmt(it.price * it.qty)}%0A`;
-      });
-      const total = items.reduce((s,it)=> s + it.price * it.qty, 0);
-      text += `%0ATotal: R$ ${fmt(total)}%0A`;
-      text += 'Observações: ';
-      return text;
-    }
+  <div class="produto">
+    <img src="batata_maluca.jpeg">
+    <div class="info">
+      <h3>Batata Maluca</h3>
+      <p>Composto: Linguiça,bacon e molho da casa.</p>
+      <select id="tipo-BatataMaluca">
+<option value="15">Pequena - R$15</option>
+<option value="30">Grande - R$30</option>
+</select>
 
-    document.getElementById('sendWppBtn').addEventListener('click', () => {
-      const msg = buildWhatsAppMessage();
-      if (!msg){ alert('Adicione pelo menos um item ao pedido.'); return; }
-      const url = `https://wa.me/${PHONE_NUMBER}?text=${msg}`;
-      window.open(url, '_blank');
-    });
-    document.getElementById('modalWpp').addEventListener('click', () => {
-      const msg = buildWhatsAppMessage();
-      if (!msg){ alert('Adicione pelo menos um item ao pedido.'); return; }
-      window.open(`https://wa.me/${PHONE_NUMBER}?text=${msg}`, '_blank');
-    });
+      <div class="acoes">
+         <button class="btn-add" onclick="adicionarCarrinho('BatataMaluca')">
+    Adicionar
+  </button>
+</div>
+      </div>
+    </div>
+  </div>
 
-    // accessibility: close modal on ESC
-    document.addEventListener('keydown', e => {
-      if (e.key === 'Escape') modal.classList.remove('open');
-    });
+    <div class="produto">
+    <img src="Batata_Recheada.jpeg">
+    <div class="info">
+      <h3>Batata Recheada</h3>
+      <p>Composto: Calabresa, cream cheese e queijo.</p>
+      <span>R$ 17,00</span>
 
-    // initial
-    updateCartUI();
+      <div class="acoes">
 
-    // expose small helpers for inline onclicks
-    window.changeQty = changeQty;
-    window.removeItem = removeItem;
-  </script>
+         <button class="btn-add" onclick="adicionarCarrinho('BatataRecheada')">
+    Adicionar
+  </button>
+</div>
+      </div>
+    </div>
+  </div>
+
+  
+
+    <div class="produto">
+    <img src="Espetinho_Queijo.jpeg">
+    <div class="info">
+      <h3>Espetinho de Queijo</h3>
+      <p>Composto: Queijo e linguiça.</p>
+      <span>R$ 14,00</span>
+
+      <div class="acoes">
+
+         <button class="btn-add" onclick="adicionarCarrinho('EspetinhoQueijo')">
+    Adicionar
+  </button>
+</div>
+      </div>
+    </div>
+  </div>
+  
+    <div class="produto">
+    <img src="PaodeAlho.jpeg">
+    <div class="info">
+      <h3>Pão de Alho</h3>
+      <p>Composto: Maionese de alho,coração,queijo e molho da casa.</p>
+      <span>R$ 27,00</span>
+
+      <div class="acoes">
+
+         <button class="btn-add" onclick="adicionarCarrinho('PaoDeAlho')">
+    Adicionar
+  </button>
+</div>
+      </div>
+    </div>
+  </div>
+  
+     <div class="produto">
+    <img src="Sanduiche.jpeg">
+    <div class="info">
+      <h3>Sanduiche Natural</h3>
+      <p>Composto:Presunto,queijo,salame,frango desfiado,tomate e alface</p>
+      <span>R$ 12,00</span>
+
+      <div class="acoes">
+
+
+         <button class="btn-add" onclick="adicionarCarrinho('Sanduiche')">
+    Adicionar
+  </button>
+</div>
+      </div>
+    </div>
+  </div>
+
+
+    <div class="produto">
+    <img src="Bolinho.jpeg">
+    <div class="info">
+      <h3>Bolinho de Bacalhau</h3>
+      <p>15 unidades de bolinho de bacalhau.</p>
+      <span>R$ 30,00</span>
+
+      <div class="acoes">
+
+         <button class="btn-add" onclick="adicionarCarrinho('Bolinho')">
+    Adicionar
+  </button>
+</div>
+      </div>
+    </div>
+  </div>
+<h3 style="color:#777; margin-top:10px; margin-bottom:5px;">Sobremesas</h3>
+   <div class="produto">
+    <img src="acai.jpeg">
+    <div class="info">
+      <h3>Açaí de Garrafa</h3>
+      <span>R$ 12,00</span>
+
+      <div class="acoes">
+
+         <button class="btn-add" onclick="adicionarCarrinho('acai')">
+    Adicionar
+  </button>
+</div>
+      </div>
+    </div>
+  </div>
+
+   <div class="produto">
+    <img src="choconinho.jpeg">
+    <div class="info">
+      <h3>Bolo de Chocolate c/ Ninho</h3>
+      <span>R$ 10,00</span>
+
+      <div class="acoes">
+
+         <button class="btn-add" onclick="adicionarCarrinho('choconinho')">
+    Adicionar
+  </button>
+</div>
+      </div>
+    </div>
+  </div>
+
+   <div class="produto">
+    <img src="moussemaracuja.jpeg">
+    <div class="info">
+      <h3>Mousse de Maracujá c/ Chocolate</h3>
+      <span>R$ 10,00</span>
+
+      <div class="acoes">
+
+         <button class="btn-add" onclick="adicionarCarrinho('moussemaracuja')">
+    Adicionar
+  </button>
+</div>
+      </div>
+    </div>
+  </div>
+
+   <div class="produto">
+    <img src="pavedemaracuja.jpeg">
+    <div class="info">
+      <h3>Pavê de Maracujá c/ Chocolate</h3>
+      <span>R$ 11,00</span>
+
+      <div class="acoes">
+
+         <button class="btn-add" onclick="adicionarCarrinho('pavedemaracuja')">
+    Adicionar
+  </button>
+</div>
+      </div>
+    </div>
+  </div>
+
+   <div class="produto">
+    <img src="bombodeuva.jpeg">
+    <div class="info">
+      <h3>Bombo de Uva (un.)</h3>
+      <span>R$ 3,00</span>
+
+      <div class="acoes">
+
+         <button class="btn-add" onclick="adicionarCarrinho('bombodeuva')">
+    Adicionar
+  </button>
+</div>
+      </div>
+    </div>
+  </div>
+
+   <div class="produto">
+    <img src="ferreirorocher.jpeg">
+    <div class="info">
+      <h3>Ferrero Rocher (un.)</h3>
+      <span>R$ 4,00</span>
+
+      <div class="acoes">
+
+         <button class="btn-add" onclick="adicionarCarrinho('ferreirorocher')">
+    Adicionar
+  </button>
+</div>
+      </div>
+    </div>
+  </div>
+
+   <div class="produto">
+    <img src="chocolatecombrigadeiro.jpeg">
+    <div class="info">
+      <h3>Bolo de Chocolate c/ Brigadeiro</h3>
+      <span>R$ 12,00</span>
+
+      <div class="acoes">
+
+         <button class="btn-add" onclick="adicionarCarrinho('chocolatecombrigadeiro')">
+    Adicionar
+  </button>
+</div>
+      </div>
+    </div>
+  </div>
+
+   <div class="produto">
+    <img src="mousseferrero.jpeg">
+    <div class="info">
+      <h3>Mousse de Ferrero Rocher</h3>
+      <span>R$ 12,00</span>
+
+      <div class="acoes">
+
+         <button class="btn-add" onclick="adicionarCarrinho('mousseferrero')">
+    Adicionar
+  </button>
+</div>
+      </div>
+    </div>
+  </div>
+
+   <div class="produto">
+    <img src="moussedechocolate.jpeg">
+    <div class="info">
+      <h3>Mousse de Chocolate</h3>
+      <span>R$ 9,00</span>
+
+      <div class="acoes">
+
+         <button class="btn-add" onclick="adicionarCarrinho('moussedechocolate')">
+    Adicionar
+  </button>
+</div>
+      </div>
+    </div>
+  </div>
+
+   <div class="produto">
+    <img src="cuzcuz.jpeg">
+    <div class="info">
+      <h3>Cuzcuz</h3>
+      <span>R$ 9,00</span>
+
+      <div class="acoes">
+
+         <button class="btn-add" onclick="adicionarCarrinho('cuzcuz')">
+    Adicionar
+  </button>
+</div>
+      </div>
+    </div>
+  </div>
+
+   <div class="produto">
+    <img src="pavedelimao.jpeg">
+    <div class="info">
+      <h3>Pavê de Limão</h3>
+      <span>R$ 12,00</span>
+
+      <div class="acoes">
+
+         <button class="btn-add" onclick="adicionarCarrinho('pavedelimao')">
+    Adicionar
+  </button>
+</div>
+      </div>
+    </div>
+  </div>
+<h3 style="color:#777; margin-top:10px; margin-bottom:5px;">Bebidas</h3>
+   <div class="produto">
+    <img src="sucomanga.jpeg">
+    <div class="info">
+      <h3>Suco de Manga - 500ml</h3>
+      <span>R$ 12,00</span>
+
+      <div class="acoes">
+
+         <button class="btn-add" onclick="adicionarCarrinho('sucomanga')">
+    Adicionar
+  </button>
+</div>
+      </div>
+    </div>
+  </div>
+
+   <div class="produto">
+    <img src="sucoabacaxi.jpeg">
+    <div class="info">
+      <h3>Suco de Abacaxi - 500ml</h3>
+      <span>R$ 12,00</span>
+
+      <div class="acoes">
+
+         <button class="btn-add" onclick="adicionarCarrinho('sucoabacaxi')">
+    Adicionar
+  </button>
+</div>
+      </div>
+    </div>
+  </div>
+
+   <div class="produto">
+    <img src="coca350.jpeg">
+    <div class="info">
+      <h3>Coca-Cola 350ml</h3>
+      <span>R$ 7,00</span>
+
+      <div class="acoes">
+
+         <button class="btn-add" onclick="adicionarCarrinho('coca350')">
+    Adicionar
+  </button>
+</div>
+      </div>
+    </div>
+  </div>
+
+   <div class="produto">
+    <img src="guaravita.jpeg">
+    <div class="info">
+      <h3>Guaravita</h3>
+      <span>R$ 3,50</span>
+
+      <div class="acoes">
+
+         <button class="btn-add" onclick="adicionarCarrinho('guaravita')">
+    Adicionar
+  </button>
+</div>
+      </div>
+    </div>
+  </div>
+
+   <div class="produto">
+    <img src="guarana2l.jpeg">
+    <div class="info">
+      <h3>Guaraná Antártica 2L</h3>
+      <span>R$ 10,00</span>
+
+      <div class="acoes">
+
+         <button class="btn-add" onclick="adicionarCarrinho('guarana2l')">
+    Adicionar
+  </button>
+</div>
+      </div>
+    </div>
+  </div>
+
+   <div class="produto">
+    <img src="coca2l.jpeg">
+    <div class="info">
+      <h3>Coca-Cola 2L</h3>
+      <span>R$ 12,00</span>
+
+      <div class="acoes">
+
+         <button class="btn-add" onclick="adicionarCarrinho('coca2l')">
+    Adicionar
+  </button>
+</div>
+      </div>
+    </div>
+  </div>
+
+
+</main>
+<section class="checkout">
+  <h2>Resumo do Pedido</h2>
+  <p class="subtitulo">Confira antes de enviar</p>
+
+  <label class="retirar">
+    <input type="checkbox" id="retirarLocal" onchange="toggleEndereco()">
+    Retirar no local
+  </label>
+
+  <div class="form">
+    <input type="text" id="nome" placeholder="Nome completo">
+
+    <input type="text" id="endereco" placeholder="Endereço completo">
+
+    <select id="pagamento">
+      <option value="">Forma de pagamento</option>
+      <option>Dinheiro</option>
+      <option>Cartão</option>
+      <option>PIX</option>
+    </select>
+
+    <input type="text" id="troco" placeholder="Se dinheiro, troco para quanto?">
+    <input type="text" id="observacao" placeholder="Observação do pedido">
+  </div>
+
+  <div class="lista-produtos" id="lista"></div>
+
+  <div class="valores">
+    <div><span>Subtotal</span><span>R$ <span id="subtotal">0.00</span></span></div>
+    <div><span>Entrega</span><span>R$ <span id="entrega">7.00</span></span></div>
+    <div class="total"><span>Total</span><span>R$ <span id="total">0.00</span></span></div>
+  </div>
+
+<button class="limpar" onclick="limparCarrinho()">Limpar</button>
+  <button class="finalizar" onclick="finalizarPedido()">Finalizar Pedido</button>
+</section>
+
+<script src="script.js"></script>
 </body>
 </html>
