@@ -2,7 +2,7 @@
 <html lang="pt-BR">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
   <title>Monety Doces</title>
   <link rel="stylesheet" href="style.css">
 </head>
@@ -555,7 +555,9 @@ bacon, cheddan, tomate e alface.</p>
   </div>
 
 <button class="limpar" onclick="limparCarrinho()">Limpar</button>
-  <button class="finalizar" onclick="finalizarPedido()">Finalizar Pedido</button>
+  <button class="finalizar" onclick="finalizarPedido()" style="width:100%; cursor:pointer;">
+  <span style="pointer-events:none; user-select:none;">Finalizar Pedido</span>
+</button>
 </section>
 <footer class="footer-linesoft">
   <div class="footer-content">
