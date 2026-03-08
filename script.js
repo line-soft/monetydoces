@@ -31,8 +31,8 @@ const precos = {
   sucoabacaxi: 12.00,
   coca350: 7.00,
   guaravita: 3.50,
-  guarana2l: 10.00,
-  coca2l: 12.00
+  guarana15l: 10.00,
+  coca15l: 12.00
 };
 
 const imagens = {
@@ -65,8 +65,8 @@ const imagens = {
   sucoabacaxi: "sucoabacaxi.jpeg",
   coca350: "coca350.jpeg",
   guaravita: "guaravita.jpeg",
-  guarana2l: "guarana2l.jpeg",
-  coca2l: "coca2l.jpeg"
+  guarana15l: "guarana2l.jpeg",
+  coca15l: "coca2l.jpeg"
 };
 /* SPLASH */
 window.onload = () => {
@@ -150,6 +150,7 @@ if (!retirar && subtotal > 0 && subtotal < 20) {
   document.getElementById("subtotal").textContent = subtotal.toFixed(2);
   document.getElementById("entrega").textContent = entrega.toFixed(2);
   document.getElementById("total").textContent = (subtotal + entrega).toFixed(2);
+  controlarBarraPedido();
 }
 
 /* RETIRAR NO LOCAL */
@@ -165,6 +166,7 @@ function limparCarrinho() {
   for (let item in carrinho) delete carrinho[item];
   document.querySelectorAll('[id^="qtd-"]').forEach(el => el.textContent = 0);
   atualizarCarrinho();
+  controlarBarraPedido();
 }
 
 /* FINALIZAR PEDIDO */
@@ -215,7 +217,7 @@ function finalizarPedido() {
   msg += "\nEntrega: R$ " + entrega;
   msg += "\nTotal: R$ " + total;
 
-  const url = "https://wa.me/5521965781487?text=" + encodeURIComponent(msg);
+  const url = "https://wa.me/5521969057549?text=" + encodeURIComponent(msg);
 
   window.open(url, "_blank");
 }
@@ -232,4 +234,130 @@ function posicionarListaNoTopo() {
 function removerItem(item){
   delete carrinho[item];
   atualizarCarrinho();
+}
+
+/* ============================= */
+/* FUNÇÕES VISUAIS TIPO IFOOD   */
+/* ============================= */
+
+/* TOAST */
+function mostrarToast(msg){
+  let toast = document.getElementById("toast-add");
+
+  if(!toast){
+    toast = document.createElement("div");
+    toast.id = "toast-add";
+    toast.style.position = "fixed";
+    toast.style.bottom = "90px";
+    toast.style.left = "50%";
+    toast.style.transform = "translateX(-50%)";
+    toast.style.background = "#222";
+    toast.style.color = "#fff";
+    toast.style.padding = "10px 18px";
+    toast.style.borderRadius = "8px";
+    toast.style.fontSize = "14px";
+    toast.style.zIndex = "9999";
+    toast.style.opacity = "0";
+    toast.style.transition = "0.3s";
+    document.body.appendChild(toast);
+  }
+
+  toast.textContent = msg;
+  toast.style.opacity = "1";
+
+  setTimeout(()=>{
+    toast.style.opacity = "0";
+  },1500);
+}
+
+/* BARRA FLUTUANTE */
+function criarBarraPedido(){
+
+  if(document.getElementById("barraPedido")) return;
+
+  const barra = document.createElement("div");
+  barra.id = "barraPedido";
+
+  barra.style.position = "fixed";
+  barra.style.bottom = "0";
+  barra.style.left = "0";
+  barra.style.width = "100%";
+  barra.style.background = "#ff3c00";
+  barra.style.color = "#fff";
+  barra.style.display = "flex";
+  barra.style.justifyContent = "space-between";
+  barra.style.alignItems = "center";
+  barra.style.padding = "14px 20px";
+  barra.style.fontWeight = "bold";
+  barra.style.zIndex = "9999";
+  barra.style.boxShadow = "0 -2px 10px rgba(0,0,0,0.2)";
+
+  barra.innerHTML = `
+    <span id="barraTotal">Total R$ 0.00</span>
+    <button id="verPedidoBtn"
+      style="
+      background:#fff;
+      color:#ff3c00;
+      border:none;
+      padding:8px 16px;
+      border-radius:6px;
+      font-weight:bold;
+      cursor:pointer;
+      ">
+      Ver pedido
+    </button>
+  `;
+
+  document.body.appendChild(barra);
+
+  document.getElementById("verPedidoBtn").onclick = ()=>{
+    document.querySelector(".checkout")
+      .scrollIntoView({behavior:"smooth"});
+  };
+}
+
+/* ATUALIZA TOTAL NA BARRA */
+function atualizarBarraTotal(){
+  const total = document.getElementById("total").textContent;
+  const el = document.getElementById("barraTotal");
+  if(el){
+    el.textContent = "Ver pedido • R$ " + total;
+  }
+}
+
+/* INTERCEPTAR ADIÇÃO AO CARRINHO */
+const adicionarOriginal = adicionarCarrinho;
+
+adicionarCarrinho = function(produto){
+
+  adicionarOriginal(produto);
+
+  mostrarToast("Item adicionado ao pedido");
+
+  criarBarraPedido();
+
+  setTimeout(()=>{
+    atualizarBarraTotal();
+  },50);
+};
+
+/* ATUALIZA TOTAL SEMPRE */
+const atualizarOriginal = atualizarCarrinho;
+
+atualizarCarrinho = function(){
+
+  atualizarOriginal();
+
+  atualizarBarraTotal();
+};
+function controlarBarraPedido(){
+  const barra = document.getElementById("barraPedido");
+
+  if(!barra) return;
+
+  if(Object.keys(carrinho).length === 0){
+    barra.style.display = "none";
+  }else{
+    barra.style.display = "flex";
+  }
 }

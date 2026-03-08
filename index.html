@@ -473,12 +473,12 @@ bacon, cheddan, tomate e alface.</p>
    <div class="produto">
     <img src="guarana2l.jpeg">
     <div class="info">
-      <h3>Guaraná Antártica 2L</h3>
+      <h3>Guaraná Antártica 1,5L</h3>
       <span>R$ 10,00</span>
 
       <div class="acoes">
 
-         <button class="btn-add" onclick="adicionarCarrinho('guarana2l')">
+         <button class="btn-add" onclick="adicionarCarrinho('guarana15l')">
     Adicionar
   </button>
 </div>
@@ -489,12 +489,12 @@ bacon, cheddan, tomate e alface.</p>
    <div class="produto">
     <img src="coca2l.jpeg">
     <div class="info">
-      <h3>Coca-Cola 2L</h3>
+      <h3>Coca-Cola 1,5L</h3>
       <span>R$ 12,00</span>
 
       <div class="acoes">
 
-         <button class="btn-add" onclick="adicionarCarrinho('coca2l')">
+         <button class="btn-add" onclick="adicionarCarrinho('coca15l')">
     Adicionar
   </button>
 </div>
@@ -540,10 +540,14 @@ bacon, cheddan, tomate e alface.</p>
 <button class="limpar" onclick="limparCarrinho()">Limpar</button>
   <button class="finalizar" onclick="finalizarPedido()">Finalizar Pedido</button>
 </section>
-<footer style="text-align:center; padding:10px;">
-  <p style="font-size:12px; color:#888; margin:0;">
-    © 2026 LineSoft • Desenvolvido por Kaio Ramos
-  </p>
+<footer class="footer-linesoft">
+  <div class="footer-content">
+    <span>© <span id="anoAtual"></span> Desenvolvido por</span>
+    <a href="https://www.instagram.com/automacao_linesoft/" target="_blank">
+      LineSoft
+    </a>
+  </div>
+</footer>
 </footer>
 <script src="script.js"></script>
 </body>

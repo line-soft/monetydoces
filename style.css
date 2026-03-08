@@ -14,14 +14,14 @@ header {
   justify-content: center;      /* centraliza horizontal */
   align-items: center;          /* centraliza vertical */
   box-shadow: 0 8px 25px rgba(0,0,0,0.06);
-  position: sticky;
+  position: static;
   top: 0;
   z-index: 10;
 }
 
 /* CONTROLE DO TAMANHO DA LOGO */
 .logo {
-  height: 150px;
+  height: 200px;
   animation: logoDrop 0.8s ease;
 }
 
@@ -314,5 +314,29 @@ body {
   font-weight: 700;
 }
 
+.footer-linesoft{
+  margin-top:15px;
+  padding:14px 10px;
+  text-align:center;
+  border-top:1px solid #eaeaea;
+  background:#fafafa;
+}
 
+.footer-content{
+  font-size:13px;
+  color:#777;
+  letter-spacing:0.3px;
+}
+
+.footer-linesoft a{
+  color:#ff3c00;
+  font-weight:600;
+  text-decoration:none;
+  margin-left:4px;
+  transition:0.2s;
+}
+
+.footer-linesoft a:hover{
+  color:#ff6a3d;
+}
 
