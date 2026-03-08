@@ -67,6 +67,40 @@ const precos = {
   coca15l: 12.00
 };
 
+const nomes = {
+  xtudo: "X-Tudo c/ Guaravita",
+  xcalabresa: "X Calabresa",
+  xfrango: "X Frango",
+  cachorroquente: "Cachorro Quente",
+  CachorroQuenteCoreano: "Cachorro Quente Coreano",
+  EspetoCoreano: "Espeto Coreano",
+  BatataMaluca: "Batata Maluca",
+  BatataRecheada: "Batata Recheada",
+  EspetinhoQueijo: "Espetinho de Queijo",
+  PaoDeAlho: "Pão de Alho",
+  Sanduiche: "Sanduíche Natural",
+  Bolinho: "Bolinho de Bacalhau",
+
+  acai: "Açaí de Garrafa",
+  choconinho: "Bolo de Chocolate c/ Ninho",
+  moussemaracuja: "Mousse de Maracujá c/ Chocolate",
+  pavedemaracuja: "Pavê de Maracujá c/ Chocolate",
+  bombodeuva: "Bombom de Uva",
+  ferreirorocher: "Ferrero Rocher",
+  chocolatecombrigadeiro: "Bolo de Chocolate c/ Brigadeiro",
+  mousseferrero: "Mousse de Ferrero Rocher",
+  moussedechocolate: "Mousse de Chocolate",
+  cuzcuz: "Cuzcuz",
+  pavedelimao: "Pavê de Limão",
+
+  sucomanga: "Suco de Manga 500ml",
+  sucoabacaxi: "Suco de Abacaxi 500ml",
+  coca350: "Coca-Cola 350ml",
+  guaravita: "Guaravita",
+  guarana15l: "Guaraná Antártica 1,5L",
+  coca15l: "Coca-Cola 1,5L"
+};
+
 const imagens = {
   xtudo: "xtudo.jpeg",
   xcalabresa: "xcalabresa.jpeg",
@@ -223,9 +257,18 @@ function finalizarPedido() {
   let msg = "🍬 Pedido - Monety Doces 🍬\n\n";
   msg += "Itens do Pedido:\n";
 
-  for (let item in carrinho) {
-    msg += "- " + item.replace("-", " - ") + " x" + carrinho[item] + "\n";
-  }
+ for (let item in carrinho) {
+
+  const qtd = carrinho[item];
+  const preco = precos[item];
+  const totalItem = preco * qtd;
+
+  const chave = item.split("-")[0];
+  const nomeProduto = nomes[chave] || chave;
+
+  msg += `- ${nomeProduto} x${qtd} • R$ ${totalItem.toFixed(2)}\n`;
+
+}
 
   msg += "\nNome: " + nome + "\n";
 
@@ -259,9 +302,12 @@ function posicionarListaNoTopo() {
   const subtitulo = checkout.querySelector(".subtitulo");
   const lista = document.getElementById("lista");
 
-  if (checkout && subtitulo && lista) {
-    checkout.insertBefore(lista, subtitulo.nextSibling);
-  }
+  if (!checkout || !subtitulo || !lista) return;
+
+  // evita reposicionar se já estiver no lugar correto
+  if (lista.previousElementSibling === subtitulo) return;
+
+  checkout.insertBefore(lista, subtitulo.nextSibling);
 }
 function removerItem(item){
   delete carrinho[item];
@@ -455,3 +501,15 @@ function verificarHorarioFuncionamento(){
 }
 
 window.addEventListener("load", verificarHorarioFuncionamento);
+
+document.addEventListener("gesturestart", function(e) {
+  e.preventDefault();
+});
+
+document.addEventListener("gesturechange", function(e) {
+  e.preventDefault();
+});
+
+document.addEventListener("gestureend", function(e) {
+  e.preventDefault();
+});

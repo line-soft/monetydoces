@@ -2,14 +2,12 @@
 <html lang="pt-BR">
 <head>
   <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no">
   <title>Monety Doces</title>
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
-<div id="splash">
-  <img src="logo.png" alt="Logo" class="splash-logo">
-</div>
+
 
 <header>
   <img src="logo.png" alt="Logo DoceMania" class="logo">
@@ -547,6 +545,7 @@ bacon, cheddan, tomate e alface.</p>
   </div>
 
   <div class="lista-produtos" id="lista"></div>
+  <div style="clear:both;"></div>
 
   <div class="valores">
     <div><span>Subtotal</span><span>R$ <span id="subtotal">0.00</span></span></div>
@@ -555,8 +554,8 @@ bacon, cheddan, tomate e alface.</p>
   </div>
 
 <button class="limpar" onclick="limparCarrinho()">Limpar</button>
-  <button class="finalizar" onclick="finalizarPedido()" style="width:100%; cursor:pointer;">
-  <span style="pointer-events:none; user-select:none;">Finalizar Pedido</span>
+<button class="finalizar" onclick="finalizarPedido()">
+  <span>Finalizar Pedido</span>
 </button>
 </section>
 <footer class="footer-linesoft">
@@ -569,5 +568,33 @@ bacon, cheddan, tomate e alface.</p>
 </footer>
 </footer>
 <script src="script.js"></script>
+<style>
+#lista{
+  pointer-events:auto;
+}
+
+.finalizar{
+  width:100%;
+  padding:16px;
+  font-size:16px;
+  font-weight:bold;
+  background:#28a745;
+  color:#fff;
+  border:none;
+  border-radius:8px;
+  cursor:pointer;
+  display:block;
+
+  position:relative;
+  z-index:999999;
+
+  pointer-events:auto !important;
+  user-select:none;
+}
+
+.finalizar span{
+  pointer-events:none;
+}
+</style>
 </body>
 </html>
