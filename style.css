@@ -340,3 +340,30 @@ body {
   color:#ff6a3d;
 }
 
+.horario-app{
+  max-width:320px;
+  margin:10px auto 5px auto;
+  padding:10px 14px;
+  background:#fafafa;
+  border-radius:10px;
+  box-shadow:0 2px 6px rgba(0,0,0,0.05);
+  font-size:13px;
+}
+
+.horario-titulo{
+  text-align:center;
+  font-weight:600;
+  color:#444;
+  margin-bottom:6px;
+}
+
+.horario-linhas{
+  display:flex;
+  justify-content:space-between;
+  padding:3px 0;
+  color:#666;
+}
+
+.horario-linhas strong{
+  color:#222;
+}

@@ -1,3 +1,35 @@
+const indisponiveis = [
+  //"coca350",
+  //"xtudo",
+  //"xcalabresa",
+  //"xfrango",
+  //"cachorroquente",
+  //"CachorroQuenteCoreano",
+  //"EspetoCoreano",
+  //"BatataMaluca",
+  //"BatataRecheada",
+  //"EspetinhoQueijo",
+  //"PaoDeAlho",
+  //"Sanduiche",
+  //"Pudim",
+  //"Bolinho",
+  //"acai",
+  //"choconinho",
+  //"moussemaracuja",
+  //"pavedemaracuja",
+  //"bombodeuva",
+  //"ferreirorocher",
+  //"chocolatecombrigadeiro",
+  //"mousseferrero",
+  //"moussedechocolate",
+  //"cuzcuz",
+  //"pavedelimao",
+  //"sucomanga",
+  //"sucoabacaxi",
+  //"guaravita",
+  //"coca15l",
+  //"guarana15l"
+];
 const carrinho = {};
 const opcoes = {};
 const precos = {
@@ -361,3 +393,65 @@ function controlarBarraPedido(){
     barra.style.display = "flex";
   }
 }
+function verificarDisponibilidade(){
+
+  indisponiveis.forEach(produto => {
+
+    const btn = document.querySelector(`button[onclick="adicionarCarrinho('${produto}')"]`);
+
+    if(btn){
+      btn.disabled = true;
+      btn.innerText = "Indisponível";
+      btn.style.background = "#999";
+      btn.style.cursor = "not-allowed";
+    }
+
+  });
+
+}
+
+window.addEventListener("load", verificarDisponibilidade);
+
+function verificarHorarioFuncionamento(){
+
+  const agora = new Date();
+
+  const dia = agora.getDay(); 
+  const hora = agora.getHours();
+  const minuto = agora.getMinutes();
+
+  const horaAtual = hora + minuto/60;
+
+  let aberto = false;
+
+  // Domingo
+  if(dia === 0){
+    if(horaAtual >= 10 && horaAtual < 23) aberto = true;
+  }
+
+  // Segunda a Sexta
+  if(dia >= 1 && dia <= 5){
+    if(horaAtual >= 17 && horaAtual < 22) aberto = true;
+  }
+
+  // Sábado
+  if(dia === 6){
+    if(horaAtual >= 12 && horaAtual < 23) aberto = true;
+  }
+
+  if(!aberto){
+
+    document.querySelectorAll(".btn-add").forEach(btn => {
+
+      btn.disabled = true;
+      btn.innerText = "Fechado";
+      btn.style.background = "#999";
+      btn.style.cursor = "not-allowed";
+
+    });
+
+  }
+
+}
+
+window.addEventListener("load", verificarHorarioFuncionamento);
