@@ -1,6 +1,6 @@
 const indisponiveis = [
   //"coca350",
-  //"xtudo",
+  "xtudo",
   //"xcalabresa",
   //"xfrango",
   //"cachorroquente",
