@@ -28,7 +28,13 @@ const indisponiveis = [
   //"sucoabacaxi",
   //"guaravita",
   //"coca15l",
-  //"guarana15l"
+  //"guarana15l",
+  //"BatataRecheadaBolonhesa",
+  //"BatataRecheadaEstrogonofeFrango",
+  //"BatataRecheadaEstrogonofeCarne",
+  //"LasanhaFrango",
+  //"LasanhaBolonhesa"
+  //"EspetoKafta"
 ];
 const carrinho = {};
 const opcoes = {};
@@ -41,12 +47,14 @@ const precos = {
   EspetoCoreano: 12.00,
   BatataMaluca: 15.00,
   BatataRecheadaCalabresa: 16.00,
+  BatataRecheadaBolonhesa: 18.00,
   EspetinhoQueijo: 14.00,
   PaoDeAlho: 27.00,
   Sanduiche: 12.00,
   Pudim: 10.00,
   Bolinho: 30.00,
-
+BatataRecheadaEstrogonofeFrango: 17.00,
+BatataRecheadaEstrogonofeCarne: 20.00,
   acai: 12.00,
   choconinho: 10.00,
   moussemaracuja: 10.00,
@@ -58,13 +66,15 @@ const precos = {
   moussedechocolate: 9.00,
   cuzcuz: 9.00,
   pavedelimao: 12.00,
-
+LasanhaFrango: 23.00,
+LasanhaBolonhesa: 20.00,
   sucomanga: 12.00,
   sucoabacaxi: 12.00,
   coca350: 7.00,
   guaravita: 3.50,
   guarana15l: 10.00,
-  coca15l: 12.00
+  coca15l: 12.00,
+  EspetoKafta: 12.00
 };
 
 const nomes = {
@@ -80,7 +90,9 @@ const nomes = {
   PaoDeAlho: "Pão de Alho",
   Sanduiche: "Sanduíche Natural",
   Bolinho: "Bolinho de Bacalhau",
-
+BatataRecheadaBolonhesa: "Batata Recheada a Bolonhesa",
+BatataRecheadaEstrogonofeFrango: "Batata Recheada de Estrogonofe de Frango",
+BatataRecheadaEstrogonofeCarne: "Batata Recheada de Estrogonofe de Carne",
   acai: "Açaí de Garrafa",
   choconinho: "Bolo de Chocolate c/ Ninho",
   moussemaracuja: "Mousse de Maracujá c/ Chocolate",
@@ -92,7 +104,9 @@ const nomes = {
   moussedechocolate: "Mousse de Chocolate",
   cuzcuz: "Cuzcuz",
   pavedelimao: "Pavê de Limão",
-
+LasanhaFrango: "Lasanha de Frango",
+LasanhaBolonhesa: "Lasanha a Bolonhesa",
+EspetoKafta: "Espeto de Kafta",
   sucomanga: "Suco de Manga 500ml",
   sucoabacaxi: "Suco de Abacaxi 500ml",
   coca350: "Coca-Cola 350ml",
@@ -114,7 +128,9 @@ const imagens = {
   PaoDeAlho: "PaodeAlho.jpeg",
   Sanduiche: "Sanduiche.jpeg",
   Bolinho: "Bolinho.jpeg",
-
+BatataRecheadaBolonhesa: "batata-bolonhesa.jpg",
+BatataRecheadaEstrogonofeFrango: "batata-estrogonofe.png",
+BatataRecheadaEstrogonofeCarne: "batata-estrogonofe.png",
   acai: "acai.jpeg",
   choconinho: "choconinho.jpeg",
   moussemaracuja: "moussemaracuja.jpeg",
@@ -126,7 +142,9 @@ const imagens = {
   moussedechocolate: "moussedechocolate.jpeg",
   cuzcuz: "cuzcuz.jpeg",
   pavedelimao: "pavedelimao.jpeg",
-
+LasanhaFrango: "lasanha.jpg",
+LasanhaBolonhesa: "lasanha.jpg",
+EspetoKafta: "kafta.png",
   sucomanga: "sucomanga.jpeg",
   sucoabacaxi: "sucoabacaxi.jpeg",
   coca350: "coca350.jpeg",
