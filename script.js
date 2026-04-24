@@ -22,7 +22,7 @@ const indisponiveis = [
   //"coca15l",
   //"guarana15l",
   //"BatataRecheadaBolonhesa",
-  //"BatataRecheadaEstrogonofeFrango",
+  "BatataRecheadaEstrogonofeFrango",
   //"BatataRecheadaEstrogonofeCarne",
   //"LasanhaFrango",
   //"LasanhaBolonhesa"
