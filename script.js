@@ -122,11 +122,11 @@ const imagens = {
   EspetoKafta: "kafta.png",
   sucomanga: "sucomanga.jpeg",
   coca350: "coca350.jpeg",
-  guaravita: "guaravita.jpeg",
+  guaravita: "guaravita.png",
   guarana15l: "guarana2l.jpeg",
   coca15l: "coca2l.jpeg",
-  Guaraviton: "Guaraviton.jpg",
-  Guaravitonacai: "Guaravitonacai.jpg"
+  Guaraviton: "Guaraviton.png",
+  Guaravitonacai: "Guaravitonacai.png"
 };
 /* SPLASH */
 window.onload = () => {
