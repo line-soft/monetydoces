@@ -25,8 +25,10 @@ const indisponiveis = [
   //"BatataRecheadaEstrogonofeFrango",
   //"BatataRecheadaEstrogonofeCarne",
   //"LasanhaFrango",
-  //"LasanhaBolonhesa"
-  //"EspetoKafta"
+  //"LasanhaBolonhesa",
+  //"EspetoKafta",
+  //"Guaraviton",
+  //"Guaravitonacai"
 ];
 const carrinho = {};
 const opcoes = {};
@@ -43,22 +45,24 @@ const precos = {
   Sanduiche: 12.00,
   Pudim: 10.00,
   Bolinho: 30.00,
-BatataRecheadaEstrogonofeFrango: 17.00,
-BatataRecheadaEstrogonofeCarne: 20.00,
+  BatataRecheadaEstrogonofeFrango: 17.00,
+  BatataRecheadaEstrogonofeCarne: 20.00,
   acai: 12.00,
   moussemaracuja: 10.00,
   pavedemaracuja: 11.00,
   mousseferrero: 12.00,
   moussedechocolate: 9.00,
   pavedelimao: 12.00,
-LasanhaFrango: 23.00,
-LasanhaBolonhesa: 20.00,
+  LasanhaFrango: 23.00,
+  LasanhaBolonhesa: 20.00,
   sucomanga: 12.00,
   coca350: 7.00,
   guaravita: 3.50,
   guarana15l: 10.00,
   coca15l: 12.00,
-  EspetoKafta: 12.00
+  EspetoKafta: 12.00,
+  Guaraviton: 5.00,
+  Guaravitonacai: 5.00
 };
 
 const nomes = {
@@ -72,23 +76,25 @@ const nomes = {
   PaoDeAlho: "Pão de Alho",
   Sanduiche: "Sanduíche Natural",
   Bolinho: "Bolinho de Bacalhau",
-BatataRecheadaBolonhesa: "Batata Recheada a Bolonhesa",
-BatataRecheadaEstrogonofeFrango: "Batata Recheada de Estrogonofe de Frango",
-BatataRecheadaEstrogonofeCarne: "Batata Recheada de Estrogonofe de Carne",
+  BatataRecheadaBolonhesa: "Batata Recheada a Bolonhesa",
+  BatataRecheadaEstrogonofeFrango: "Batata Recheada de Estrogonofe de Frango",
+  BatataRecheadaEstrogonofeCarne: "Batata Recheada de Estrogonofe de Carne",
   acai: "Açaí de Garrafa",
   moussemaracuja: "Mousse de Maracujá c/ Chocolate",
   pavedemaracuja: "Pavê de Maracujá c/ Chocolate",
   mousseferrero: "Mousse de Ferrero Rocher",
   moussedechocolate: "Mousse de Chocolate",
   pavedelimao: "Pavê de Limão",
-LasanhaFrango: "Lasanha de Frango",
-LasanhaBolonhesa: "Lasanha a Bolonhesa",
-EspetoKafta: "Espeto de Kafta",
+  LasanhaFrango: "Lasanha de Frango",
+  LasanhaBolonhesa: "Lasanha a Bolonhesa",
+  EspetoKafta: "Espeto de Kafta",
   sucomanga: "Suco de Manga 500ml",
   coca350: "Coca-Cola 350ml",
   guaravita: "Guaravita",
   guarana15l: "Guaraná Antártica 1,5L",
-  coca15l: "Coca-Cola 1,5L"
+  coca15l: "Coca-Cola 1,5L",
+  Guaraviton: "Guaraviton 500ml",
+  Guaravitonacai: "Guaraviton Açaí 500ml"
 };
 
 const imagens = {
@@ -102,23 +108,25 @@ const imagens = {
   PaoDeAlho: "PaodeAlho.jpeg",
   Sanduiche: "Sanduiche.jpeg",
   Bolinho: "Bolinho.jpeg",
-BatataRecheadaBolonhesa: "batata-bolonhesa.jpg",
-BatataRecheadaEstrogonofeFrango: "estrogonofe.png",
-BatataRecheadaEstrogonofeCarne: "estrogonofe.png",
+  BatataRecheadaBolonhesa: "batata-bolonhesa.jpg",
+  BatataRecheadaEstrogonofeFrango: "estrogonofe.png",
+  BatataRecheadaEstrogonofeCarne: "estrogonofe.png",
   acai: "acai.jpeg",
   moussemaracuja: "moussemaracuja.jpeg",
   pavedemaracuja: "pavedemaracuja.jpeg",
   mousseferrero: "mousseferrero.jpeg",
   moussedechocolate: "moussedechocolate.jpeg",
   pavedelimao: "pavedelimao.jpeg",
-LasanhaFrango: "lasanha.jpg",
-LasanhaBolonhesa: "lasanha.jpg",
-EspetoKafta: "kafta.png",
+  LasanhaFrango: "lasanha.jpg",
+  LasanhaBolonhesa: "lasanha.jpg",
+  EspetoKafta: "kafta.png",
   sucomanga: "sucomanga.jpeg",
   coca350: "coca350.jpeg",
   guaravita: "guaravita.jpeg",
   guarana15l: "guarana2l.jpeg",
-  coca15l: "coca2l.jpeg"
+  coca15l: "coca2l.jpeg",
+  Guaraviton: "Guaraviton.jpg",
+  Guaravitonacai: "Guaravitonacai.jpg"
 };
 /* SPLASH */
 window.onload = () => {
