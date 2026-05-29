@@ -29,6 +29,15 @@ const indisponiveis = [
   //"EspetoKafta",
   //"Guaraviton",
   //"Guaravitonacai"
+  //"macfrango"
+  //"macbolonhesa"
+  //"maccalabresa"
+  //"macpizza"
+  //"empadao"
+  //"sopa"
+  //"bolo-choco"
+  //"sukitalaranja"
+  //"sukitauva"
 ];
 const carrinho = {};
 const opcoes = {};
@@ -38,15 +47,15 @@ const precos = {
   xfrango: 15.00,
   cachorroquente: 17.00,
   EspetoCoreano: 12.00,
-  BatataMaluca: 15.00,
-  BatataRecheadaCalabresa: 16.00,
-  BatataRecheadaBolonhesa: 18.00,
+  BatataMaluca: 20.00,
+  BatataRecheadaCalabresa: 19.00,
+  BatataRecheadaBolonhesa: 20.00,
   PaoDeAlho: 27.00,
   Sanduiche: 12.00,
   Pudim: 10.00,
   Bolinho: 30.00,
-  BatataRecheadaEstrogonofeFrango: 17.00,
-  BatataRecheadaEstrogonofeCarne: 20.00,
+  BatataRecheadaEstrogonofeFrango: 21.00,
+  BatataRecheadaEstrogonofeCarne: 25.00,
   acai: 12.00,
   moussemaracuja: 10.00,
   pavedemaracuja: 11.00,
@@ -62,7 +71,16 @@ const precos = {
   coca15l: 12.00,
   EspetoKafta: 12.00,
   Guaraviton: 5.00,
-  Guaravitonacai: 5.00
+  Guaravitonacai: 5.00,
+  macfrango: 21.00,
+  macbolonhesa: 22.00,
+  maccalabresa: 22.00,
+  macpizza: 19.00,
+  empadao: 10.00,
+  sopa: 20.00,
+  bolochoco: 16.00,
+  sukitalaranja: 10.00,
+  sukitauva: 10.00,
 };
 
 const nomes = {
@@ -94,7 +112,16 @@ const nomes = {
   guarana15l: "Guaraná Antártica 1,5L",
   coca15l: "Coca-Cola 1,5L",
   Guaraviton: "Guaraviton 500ml",
-  Guaravitonacai: "Guaraviton Açaí 500ml"
+  Guaravitonacai: "Guaraviton Açaí 500ml",
+  macfrango: "Macarrão de Frango no pote 500g",
+  macbolonhesa: "Macarrão de Bolonhesa no pote 500g",
+  maccalabresa: "Macarrão de Calabresa no pote 500g",
+  macpizza: "Macarrão de Pizza no pote 500g",
+  empadao: "Empadão de Frango",
+  sopa: "Sopa de Ervilha 500g",
+  bolochoco: "Bolo pequeno com cobertura de chocolate",
+  sukitalaranja: "Sukita Laranja 2L",
+  sukitauva: "Sukita Uva 2L",
 };
 
 const imagens = {
@@ -126,7 +153,16 @@ const imagens = {
   guarana15l: "guarana2l.jpeg",
   coca15l: "coca2l.jpeg",
   Guaraviton: "Guaraviton.png",
-  Guaravitonacai: "Guaravitonacai.png"
+  Guaravitonacai: "Guaravitonacai.png",
+  macfrango: "macarraofgo.jpeg",
+  macbolonhesa: "macarraobol.jpeg",
+  maccalabresa: "macarraocal.jpeg",
+  macpizza: "macarraopi.jpeg",
+  empadao: "empadaofoto.jpeg",
+  sopa: "sopa500.jpg",
+  bolochoco: "bolochocolate.jpeg",
+  sukitalaranja: "refsukitalaranja.png",
+  sukitauva: "refsukitauva.png"
 };
 /* SPLASH */
 window.onload = () => {
